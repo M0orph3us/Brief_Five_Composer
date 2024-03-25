@@ -1,0 +1,16 @@
+{
+  "name": "projet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "tsc": "tsc --watch",
+    "watch": "sass --watch ./src/scss/style.scss:./public/style/style.css"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "sass": "^1.72.0",
+    "typescript": "^5.4.2"
+  }
+}
