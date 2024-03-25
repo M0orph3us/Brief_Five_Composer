@@ -20,6 +20,7 @@ final class HomeController
         $this->usersRepo = new UsersRepository();
     }
 
+
     // methods
 
     use Response;
@@ -32,6 +33,7 @@ final class HomeController
     {
         $csrfRegister = $this->CSRFToken('csrfRegister');
         $csrfLogin = $this->CSRFToken('csrfLogin');
+
         $viewData = [
             'csrfRegister' => $csrfRegister,
             'csrfLogin' => $csrfLogin
@@ -41,7 +43,7 @@ final class HomeController
 
     public function register()
     {
-        if (isset($_POST['csrfRegister']) && !empty($_POST['csrfRegister']) && $_POST['csrfRegister'] === $_SESSION['csrfRegister']) {
+        if (isset($_POST['csrfRegister'], $_SESSION['csrfRegister']) && !empty($_POST['csrfRegister']) && !empty($_SESSION['csrfRegister']) && $_POST['csrfRegister'] === $_SESSION['csrfRegister']) {
             if (isset($_POST['firstnameRegister'], $_POST['lastnameRegister'], $_POST['mailRegister'], $_POST['passwordRegister']) && !empty($_POST['firstnameRegister']) && !empty($_POST['lastnameRegister']) && !empty($_POST['mailRegister']) && !empty($_POST['passwordRegister'])) {
                 $formData = [
                     'firstname' => $_POST['firstnameRegister'],
@@ -57,18 +59,23 @@ final class HomeController
                 ];
 
                 $this->usersRepo->create($data);
+                $_SESSION['userIsConnected'] = true;
+                // debug($newUser);
+                // $newUser->getFirstname();
 
 
                 $csrfRegister = $this->CSRFToken('csrfRegister');
                 $viewData = [
-                    'csrfRegister' => $csrfRegister
+                    'csrfRegister' => $csrfRegister,
+                    'register' => 'register'
                 ];
                 $this->render('home', $viewData);
             }
         } else {
             $csrfRegister = $this->CSRFToken('csrfRegister');
             $viewData = [
-                'csrf' => $csrfRegister
+                'csrfRegister' => $csrfRegister,
+                'bugCSRF' => 'bugCSRF'
             ];
             $this->render('home', $viewData);
         }
@@ -80,5 +87,13 @@ final class HomeController
             if (isset($_POST['mailLogin'], $_POST['passwordLogin']) && !empty($_POST['mailLogin']) && !empty($_POST['passwordLogin'])) {
             }
         }
+    }
+
+    public function logout()
+    {
+        session_start();
+        session_destroy();
+
+        header('Location: /Brief_Five_Composer/');
     }
 }

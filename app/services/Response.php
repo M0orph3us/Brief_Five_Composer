@@ -6,11 +6,6 @@ trait Response
 {
     public function render(string $view, ?array $viewData = null): void
     {
-        // if (!empty($viewData)) {
-        //     foreach ($viewData as $key => $value) {
-        //         ${$key} = $value;
-        //     }
-        // }
         if (!empty($viewData)) {
             extract($viewData);
         }

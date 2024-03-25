@@ -40,6 +40,11 @@ class Router
                 $admin = new AdminController();
                 break;
 
+            case URL_LOGOUT:
+                $logout = new HomeController();
+                $logout->logout();
+                break;
+
 
             default:
                 header("HTTP/1.0 404 Not Found");

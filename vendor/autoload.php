@@ -19,7 +19,7 @@ if (PHP_VERSION_ID < 50600) {
         E_USER_ERROR
     );
 }
-
+session_start();
 require __DIR__ . '/../config/debug.php';
 require __DIR__ . '/../config/configRouter.php';
 require_once __DIR__ . '/composer/autoload_real.php';
