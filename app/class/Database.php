@@ -17,8 +17,8 @@ final class Database
         require __DIR__ . '/../../config/configDb.php';
         $this->connexionDB($CONFIG);
     }
-    // Methods
 
+    // Methods
     private function connexionDB($CONFIG)
     {
         try {

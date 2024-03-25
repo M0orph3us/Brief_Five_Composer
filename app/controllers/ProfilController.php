@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-use app\class\models\repositories\UsersRepository;
+use app\models\repositories\UsersRepository;
 use app\services\Response;
 
 final class ProfilController

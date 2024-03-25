@@ -1,11 +1,11 @@
 <?php
 
-namespace app\class\models;
+namespace app\models;
 
-final class Opening
+final class ToAssign
 {
     // params
-    private string $uuid, $opening_day, $opening_hour;
+    private string $uuid_teams, $uuid_reservations;
 
     // constructor
     public function __construct(array $data = null)
@@ -25,30 +25,21 @@ final class Opening
             }
         }
     }
-
     // setters & getters
 
     /**
      * @return string
      */
-    public function getUuid(): string
+    public function getUuid_teams(): string
     {
-        return $this->uuid;
+        return $this->uuid_teams;
     }
 
     /**
      * @return string
      */
-    public function getOpening_day(): string
+    public function getUuid_reservations(): string
     {
-        return $this->opening_day;
-    }
-
-    /**
-     * @return string
-     */
-    public function getOpening_hour(): string
-    {
-        return $this->opening_hour;
+        return $this->uuid_reservations;
     }
 }

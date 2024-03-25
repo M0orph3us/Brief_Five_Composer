@@ -1,15 +1,14 @@
 <?php
 
-namespace app\class\models\repositories;
+namespace app\models\repositories;
 
 use app\class\Database;
-use app\class\models\Teams;
-use app\class\models\Users;
+use app\models\Users;
 use Exception;
 use PDO;
 use PDOException;
 
-final class TeamsRepository
+final class UsersRepository
 {
     // params
     private $db;
@@ -25,30 +24,28 @@ final class TeamsRepository
 
     /**
      * @param array<string, string> $data
-     * @return Teams
+     * @return Users
      */
-    public function create(array $data): Teams
+    public function create(array $data): Users
     {
-        $sql = "INSERT INTO teams (firstname, lastname, mail, password) VALUE(:firstname, :lastname, :mail, :password)";
+        $sql = "INSERT INTO users (firstname, lastname, mail, password) VALUE(:firstname, :lastname, :mail, :password)";
         try {
 
             $params = [
-                'firstname' => $data['firstname'],
-                'lastname' => $data['lastname'],
-                'mail' => $data['mail'],
-                'password' => $data['password']
+                'firstname' => $data['firstnameSanitize'],
+                'lastname' => $data['lastnameSanitize'],
+                'mail' => $data['mailSanitize'],
+                'password' => $data['passwordHash']
             ];
 
             $stmt = $this->db->prepare($sql);
             $stmt->execute($params);
             $stmt->closeCursor();
 
-            $getUuid = $this->getUuid($data['mail']);
-            $params =  [
-                'uuid' => $getUuid
-            ];
-            $team = new Teams($params);
-            return $team;
+            $params['uuid'] = $this->getUuid($data['mailSanitize']);
+            $_SESSION['userIsConnected'] = true;
+            $user = new Users($params);
+            return $user;
         } catch (PDOException $error) {
             throw new Exception('Error: ' . $error->getMessage());
         }
@@ -60,7 +57,7 @@ final class TeamsRepository
      */
     public function readOne(string $uuid): Users
     {
-        $sql = 'SELECT * FROM teams WHERE uuid = UUID_TO_BIN(:uuid)';
+        $sql = 'SELECT * FROM users WHERE uuid = UUID_TO_BIN(:uuid)';
         $params = [
             'uuid' => $uuid
         ];
@@ -82,7 +79,7 @@ final class TeamsRepository
      */
     public function readAll(): array
     {
-        $sql = "SELECT * FROM teams";
+        $sql = "SELECT * FROM users";
         try {
             $stmt = $this->db->prepare($sql);
             $stmt->execute();
@@ -101,7 +98,7 @@ final class TeamsRepository
      */
     public function update(string $uuid, array $data): void
     {
-        $sql = 'UPDATE teams SET firstname = :firstname, lastname = :lastname, mail = :mail, password = :password WHERE uuid = UUID_TO_BIN(:uuid)';
+        $sql = 'UPDATE users SET firstname = :firstname, lastname = :lastname, mail = :mail, password = :password WHERE uuid = UUID_TO_BIN(:uuid)';
         $params = [
             'uuid' => $uuid,
             'firstname' => $data['firstname'],
@@ -124,7 +121,7 @@ final class TeamsRepository
      */
     public function delete(string $uuid): void
     {
-        $sql = 'DELETE FROM teams WHERE uuid = UUID_TO_BIN(:uuid)';
+        $sql = 'DELETE FROM users WHERE uuid = UUID_TO_BIN(:uuid)';
         $params = [
             'uuid' => $uuid
         ];
@@ -137,16 +134,15 @@ final class TeamsRepository
         }
     }
     /**
-     * @param array $data
+     * @param string $mail
      * @return string
      */
 
-    public function getUuid(string $data): string
+    public function getUuid(string $mail): string
     {
-        $sql = 'SELECT BIN_TO_UUID(uuid) AS uuid FROM users WHERE firstname = :firstname, lastname = :lastname';
+        $sql = 'SELECT BIN_TO_UUID(uuid) AS uuid FROM users WHERE mail = :mail';
         $params = [
-            'firstname' => $data['firstname'],
-            'lastname' => $data['lastname']
+            'mail' => $mail
         ];
         try {
             $stmt = $this->db->prepare($sql);

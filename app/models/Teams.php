@@ -1,6 +1,6 @@
 <?php
 
-namespace app\class\models;
+namespace app\models;
 
 final class Teams
 {

@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-use app\class\models\repositories\ReservationsRepository;
+use app\models\repositories\ReservationsRepository;
 use app\services\Response;
 
 final class ReservationController

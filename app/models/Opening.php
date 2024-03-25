@@ -1,12 +1,11 @@
 <?php
 
-namespace app\class\models;
+namespace app\models;
 
-final class AvailableTables
+final class Opening
 {
     // params
-    private string $uuid;
-    private int $quantity_tables;
+    private string $uuid, $opening_day, $opening_hour;
 
     // constructor
     public function __construct(array $data = null)
@@ -26,10 +25,11 @@ final class AvailableTables
             }
         }
     }
+
     // setters & getters
 
     /**
-     * $return string
+     * @return string
      */
     public function getUuid(): string
     {
@@ -37,10 +37,18 @@ final class AvailableTables
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getQuantity_tables(): int
+    public function getOpening_day(): string
     {
-        return $this->quantity_tables;
+        return $this->opening_day;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOpening_hour(): string
+    {
+        return $this->opening_hour;
     }
 }

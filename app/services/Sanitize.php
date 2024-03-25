@@ -4,13 +4,11 @@ namespace app\services;
 
 trait Sanitize
 {
-    public function sanitize(?array $fomrData = null): array
+    public function sanitize(array $fomrData): array
     {
-        if (!empty($fomrData)) {
-            foreach ($fomrData as $key => $value) {
-                $dataSanitize[$key . 'Sanitize'] = htmlentities($value);
-            }
-            return $dataSanitize;
+        foreach ($fomrData as $key => $value) {
+            $dataSanitize[$key . 'Sanitize'] = htmlentities($value);
         }
+        return $dataSanitize;
     }
 }

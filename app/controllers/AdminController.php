@@ -2,8 +2,8 @@
 
 namespace app\controllers;
 
-use app\class\models\repositories\ReservationsRepository;
-use app\class\models\repositories\TeamsRepository;
+use app\models\repositories\ReservationsRepository;
+use app\models\repositories\TeamsRepository;
 use app\services\Response;
 
 final class AdminController

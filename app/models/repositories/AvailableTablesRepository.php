@@ -1,9 +1,10 @@
 <?php
 
-namespace app\class\models\repositories;
+namespace app\models\repositories;
 
 use app\class\Database;
 use Exception;
+use PDO;
 use PDOException;
 
 final class AvailableTablesRepository
