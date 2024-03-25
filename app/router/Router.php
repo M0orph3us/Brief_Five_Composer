@@ -7,16 +7,12 @@ use app\controllers\HomeController;
 use app\controllers\ProfilController;
 use app\controllers\ReservationController;
 
-require __DIR__ . '/../../config/configRouter.php';
-
 class Router
 {
     public static function route($uri)
     {
         switch ($uri) {
             case URL_HOMEPAGE:
-                echo 'hey';
-                die;
                 $home = new HomeController();
                 $home->homePage();
                 break;
