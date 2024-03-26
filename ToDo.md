@@ -1,7 +1,7 @@
-TODO : HomeController-> login and their constraints + other controllers & all Repo & frontend
+# TODO : HomeController-> login and their constraints + other controllers & all Repo & frontend
 
-WIP : HomeController -> constraints register
+# WIP : RegisterController -> tester pq userRegister n'est pas appelé.
 
-TO CHECK :
+# TO CHECK :
 
-VALID :
+# VALID :

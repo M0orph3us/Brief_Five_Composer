@@ -43,7 +43,6 @@ final class UsersRepository
             $stmt->closeCursor();
 
             $params['uuid'] = $this->getUuid($data['mailSanitize']);
-            $_SESSION['userIsConnected'] = true;
             $user = new Users($params);
             return $user;
         } catch (PDOException $error) {
@@ -77,7 +76,7 @@ final class UsersRepository
     /**
      * @return array
      */
-    public function readAll(): array
+    public function readAll(): Users
     {
         $sql = "SELECT * FROM users";
         try {

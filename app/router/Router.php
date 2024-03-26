@@ -6,11 +6,15 @@ use app\controllers\AdminController;
 use app\controllers\HomeController;
 use app\controllers\ProfilController;
 use app\controllers\ReservationController;
+use app\controllers\RegisterController;
+
+require __DIR__ . '/../../config/configRouter.php';
 
 class Router
 {
     public static function route($uri)
     {
+        $method = $_SERVER['REQUEST_METHOD'];
         switch ($uri) {
             case URL_HOMEPAGE:
                 $home = new HomeController();
@@ -18,14 +22,13 @@ class Router
                 break;
 
             case URL_REGISTER:
-                $home = new HomeController();
-                $home->register();
+                $register = new RegisterController();
+                $register->registerPage();
+                if ($method === 'POST') {
+                    $register->userRegister();
+                }
                 break;
 
-            case URL_LOGIN:
-                $home = new HomeController();
-                $home->login();
-                break;
 
             case URL_PROFILPAGE:
                 $profil = new ProfilController();
