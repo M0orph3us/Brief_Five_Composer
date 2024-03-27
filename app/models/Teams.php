@@ -27,6 +27,19 @@ final class Teams
     }
     // setters & getters
 
+
+    /**
+     * @param string $uuid
+     *
+     * @return  self
+     */
+    public function setUuid(string $uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
+    }
+
     /**
      * @return string
      */
@@ -36,11 +49,35 @@ final class Teams
     }
 
     /**
+     * $param string $firstname
+     *
+     * @return  self
+     */
+    public function setFirstname(string $firstname): self
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getFirstname(): string
     {
         return $this->firstname;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return  self
+     */
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
     }
 
     /**

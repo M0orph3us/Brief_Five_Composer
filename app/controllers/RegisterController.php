@@ -18,7 +18,6 @@ final class RegisterController
     // constructor
     public function __construct()
     {
-        $this->usersRepo = new UsersRepository();
     }
 
     // methods
@@ -55,7 +54,10 @@ final class RegisterController
                         $error['password'] = 'Your confirmation password does not match the 1st';
                     };
                 } else {
-                    $error['empty'] = $this->notEmpty($_POST);
+                    $notEmpty = $this->notEmpty($_POST);
+                    foreach ($notEmpty as $key => $value) {
+                        $error[$key] = $value;
+                    }
                 };
 
                 if (!empty($error)) {
@@ -74,14 +76,12 @@ final class RegisterController
                         'passwordHash' => $passwordHash
                     ];
 
-                    $newUser = $this->usersRepo->create($data);
+                    $usersRepo = new UsersRepository();
+                    $newUser = $usersRepo->create($data);
                     $firstname = $newUser->getFirstname();
-                    $csrfRegister = $this->createCSRFToken('csrfRegister');
-                    $viewData = [
-                        'csrfRegister' => $csrfRegister,
-                        'firstname' => $firstname
-                    ];
-                    $this->render('home', $viewData);
+                    debug($firstname);
+                    $_SESSION['isRegisted'] = $firstname;
+                    header('Location: /Brief_Five_Composer/');
                 }
             }
         }
@@ -90,9 +90,8 @@ final class RegisterController
     public function registerPage()
     {
         $csrfRegister = $this->createCSRFToken('csrfRegister');
-
         $viewData = [
-            'csrfRegister' => $csrfRegister
+            'csrfRegister' => $csrfRegister,
         ];
 
         $this->render('register', $viewData);

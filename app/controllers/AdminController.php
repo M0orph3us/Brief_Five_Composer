@@ -34,4 +34,16 @@ final class AdminController
 
         $this->render('admin', $viewData);
     }
+
+    public function allTeams()
+    {
+        $getTeams = $this->teamsRepo;
+        $getAllTeams = $getTeams->readAll();
+
+        $viewData = [
+            'getAllTeams' => $getAllTeams
+        ];
+
+        $this->render('admin', $viewData);
+    }
 }

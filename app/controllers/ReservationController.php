@@ -21,7 +21,7 @@ final class ReservationController
 
     public function reservationPage()
     {
-        $newReservation = $this->reservationsRepo->create();
+        $newReservation = $this->reservationsRepo->readAll();
         $viewData = [
             'newReservation' => $newReservation
         ];

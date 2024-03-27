@@ -27,12 +27,37 @@ final class ToAssign
     }
     // setters & getters
 
+
+    /**
+     * @param string $uuid_teams
+     *
+     * @return  self
+     */
+    public function setUuid_teams(string $uuid_teams): self
+    {
+        $this->uuid_teams = $uuid_teams;
+
+        return $this;
+    }
+
     /**
      * @return string
      */
     public function getUuid_teams(): string
     {
         return $this->uuid_teams;
+    }
+
+    /**
+     * @param string $uuid_reservations
+     *
+     * @return  self
+     */
+    public function setUuid_reservations(string $uuid_reservations): self
+    {
+        $this->uuid_reservations = $uuid_reservations;
+
+        return $this;
     }
 
     /**

@@ -7,7 +7,7 @@ use Exception;
 use PDO;
 use PDOException;
 
-final class ToAssignRepository
+final class RelationalDataRepository
 {
     // params
     private $db;

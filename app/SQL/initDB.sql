@@ -7,7 +7,7 @@
 #------------------------------------------------------------
 
 CREATE TABLE users (
-    uuid binary(16) DEFAULT(UUID_TO_BIN(UUID(), 1)) NOT NULL UNIQUE, firstname Varchar(50) NOT NULL, lastname Varchar(50) NOT NULL, mail Varchar(255) NOT NULL UNIQUE, password Varchar(255) NOT NULL, role Varchar(20) DEFAULT('user') NOT NULL, created_at Date DEFAULT(CURRENT_DATE) NOT NULL, CONSTRAINT PK_users PRIMARY KEY (uuid)
+    uuid binary(16) DEFAULT(UUID_TO_BIN(UUID(), 1)) NOT NULL UNIQUE, firstname Varchar(50) NOT NULL, lastname Varchar(50) NOT NULL, mail Varchar(255) NOT NULL UNIQUE INDEX, password Varchar(255) NOT NULL, role Varchar(20) DEFAULT('user') NOT NULL, created_at Date DEFAULT(CURRENT_DATE) NOT NULL, CONSTRAINT PK_users PRIMARY KEY (uuid)
 ) ENGINE = InnoDB;
 
 #------------------------------------------------------------
@@ -39,7 +39,7 @@ CREATE TABLE availableTables (
 #------------------------------------------------------------
 
 CREATE TABLE opening (
-    uuid binary(16) DEFAULT(UUID_TO_BIN(UUID(), 1)) NOT NULL UNIQUE, opening_day Varchar(10) NOT NULL, closing_day Varchar(10) NOT NULL, morning_opening_hour Time NOT NULL, morning_closing_hour Time NOT NULL, evening_opening_hour Time NOT NULL, evening_closing_hour Time NOT NULL, CONSTRAINT PK_opening PRIMARY KEY (uuid)
+    uuid binary(16) DEFAULT(UUID_TO_BIN(UUID(), 1)) NOT NULL UNIQUE, opening_day Varchar(10) NOT NULL, morning_opening_hour Time NULL, morning_closing_hour Time NULL, evening_opening_hour Time NULL, evening_closing_hour Time NULL, CONSTRAINT PK_opening PRIMARY KEY (uuid)
 ) ENGINE = InnoDB;
 
 #------------------------------------------------------------

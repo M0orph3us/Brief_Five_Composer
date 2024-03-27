@@ -1,5 +1,7 @@
 <?php
 require_once __DIR__ . '/./includes/header.php';
+debug($viewData, 0);
+debug($_SESSION, 0);
 ?>
 <main>
     <h1>register</h1>

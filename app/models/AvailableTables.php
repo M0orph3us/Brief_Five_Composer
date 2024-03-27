@@ -28,12 +28,37 @@ final class AvailableTables
     }
     // setters & getters
 
+
+    /**
+     * @param string $uuid
+     *
+     * @return  self
+     */
+    public function setUuid(string $uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
+    }
+
     /**
      * $return string
      */
     public function getUuid(): string
     {
         return $this->uuid;
+    }
+
+    /**
+     * @param int $quantity_tables
+     *
+     * @return  self
+     */
+    public function setQuantity_tables(int $quantity_tables): self
+    {
+        $this->quantity_tables = $quantity_tables;
+
+        return $this;
     }
 
     /**

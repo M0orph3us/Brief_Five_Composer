@@ -18,7 +18,7 @@ final class Database
         $this->connexionDB($CONFIG);
     }
 
-    // Methods
+    // methods
     private function connexionDB($CONFIG)
     {
         try {
@@ -38,6 +38,17 @@ final class Database
     public function initDB()
     {
         $sql = file_get_contents('../SQL/initDB.sql');
+        try {
+            $request = $this->db->prepare($sql);
+            $request->execute();
+        } catch (PDOException $error) {
+            throw new Exception('Error: ' . $error->getMessage());
+        }
+    }
+
+    public function initData()
+    {
+        $sql = file_get_contents('../SQL/initData.sql');
         try {
             $request = $this->db->prepare($sql);
             $request->execute();

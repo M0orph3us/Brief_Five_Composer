@@ -4,9 +4,8 @@ namespace app\models\repositories;
 
 use app\class\Database;
 use app\models\Teams;
-use app\models\Users;
+use app\services\SQLRequest;
 use Exception;
-use PDO;
 use PDOException;
 
 
@@ -23,12 +22,13 @@ final class TeamsRepository
     }
 
     // CRUD
+    use SQLRequest;
 
     /**
      * @param array<string, string> $data
      * @return Teams
      */
-    public function create(array $data): Teams
+    public function create(array $data): void
     {
         $sql = "INSERT INTO teams (firstname, lastname, mail, password) VALUE(:firstname, :lastname, :mail, :password)";
         try {
@@ -43,58 +43,11 @@ final class TeamsRepository
             $stmt = $this->db->prepare($sql);
             $stmt->execute($params);
             $stmt->closeCursor();
-
-            $getUuid = $this->getUuid($data['mail']);
-            $params =  [
-                'uuid' => $getUuid
-            ];
-            $team = new Teams($params);
-            return $team;
         } catch (PDOException $error) {
             throw new Exception('Error: ' . $error->getMessage());
         }
     }
 
-    /**
-     * @param string $uuid
-     * @return Users
-     */
-    public function readOne(string $uuid): Users
-    {
-        $sql = 'SELECT * FROM teams WHERE uuid = UUID_TO_BIN(:uuid)';
-        $params = [
-            'uuid' => $uuid
-        ];
-        try {
-            $stmt = $this->db->prepare($sql);
-            $stmt->execute($params);
-            $result = $stmt->setFetchMode(PDO::FETCH_CLASS, Users::class);
-            $result = $stmt->fetch();
-            $stmt->closeCursor();
-
-            return $result;
-        } catch (PDOException $error) {
-            throw new Exception('Error: ' . $error->getMessage());
-        }
-    }
-
-    /**
-     * @return array
-     */
-    public function readAll(): array
-    {
-        $sql = "SELECT * FROM teams";
-        try {
-            $stmt = $this->db->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->fetchAll(PDO::FETCH_CLASS, Users::class);
-            $stmt->closeCursor();
-
-            return $result;
-        } catch (PDOException $error) {
-            throw new Exception('Error: ' . $error->getMessage());
-        }
-    }
     /**
      * @param string $uuid
      * @param array<string, string> $data
@@ -115,47 +68,6 @@ final class TeamsRepository
             $stmt = $this->db->prepare($sql);
             $stmt->execute($params);
             $stmt->closeCursor();
-        } catch (PDOException $error) {
-            throw new Exception('Error: ' . $error->getMessage());
-        }
-    }
-    /**
-     * @param string $uuid
-     * @return void
-     */
-    public function delete(string $uuid): void
-    {
-        $sql = 'DELETE FROM teams WHERE uuid = UUID_TO_BIN(:uuid)';
-        $params = [
-            'uuid' => $uuid
-        ];
-        try {
-            $stmt = $this->db->prepare($sql);
-            $stmt->execute($params);
-            $stmt->closeCursor();
-        } catch (PDOException $error) {
-            throw new Exception('Error: ' . $error->getMessage());
-        }
-    }
-    /**
-     * @param array $data
-     * @return string
-     */
-
-    public function getUuid(string $data): string
-    {
-        $sql = 'SELECT BIN_TO_UUID(uuid) AS uuid FROM users WHERE firstname = :firstname, lastname = :lastname';
-        $params = [
-            'firstname' => $data['firstname'],
-            'lastname' => $data['lastname']
-        ];
-        try {
-            $stmt = $this->db->prepare($sql);
-            $stmt->execute($params);
-            $result = $stmt->fetchColumn();
-            $stmt->closeCursor();
-
-            return $result;
         } catch (PDOException $error) {
             throw new Exception('Error: ' . $error->getMessage());
         }

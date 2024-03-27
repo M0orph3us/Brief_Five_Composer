@@ -3,8 +3,8 @@
 namespace app\models\repositories;
 
 use app\class\Database;
+use app\services\SQLRequest;
 use Exception;
-use PDO;
 use PDOException;
 
 final class AvailableTablesRepository
@@ -20,71 +20,7 @@ final class AvailableTablesRepository
     }
 
     // CRUD
-
-    // /**
-    //  * @param int $number
-    //  * @return AvailableTables
-    //  */
-    // public function create(int $number): AvailableTables
-    // {
-    //     $sql = "INSERT INTO available_tables (quantity_tables) VALUE(:quantity_tables)";
-    //     try {
-
-    //         $params = [
-    //             'quantity_tables' => $number
-    //         ];
-
-    //         $stmt = $this->db->prepare($sql);
-    //         $stmt->execute($params);
-    //         $stmt->closeCursor();
-
-    //         $getUuid = $this->getUuid();
-    //         $params =  [
-    //             'uuid' => $getUuid
-    //         ];
-    //         $tables = new AvailableTables($params);
-    //         return $tables;
-    //     } catch (PDOException $error) {
-    //         throw new Exception('Error: ' . $error->getMessage());
-    //     }
-    // }
-
-
-    /**
-     * @return int
-     */
-    public function readOne(): int
-    {
-        $sql = 'SELECT * FROM available_tables ';
-        try {
-            $stmt = $this->db->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->fetchColumn(1);
-            $stmt->closeCursor();
-
-            return $result;
-        } catch (PDOException $error) {
-            throw new Exception('Error: ' . $error->getMessage());
-        }
-    }
-
-    // /**
-    //  * @return int
-    //  */
-    // public function readAll()
-    // {
-    //     $sql = "SELECT * FROM available_tables";
-    //     try {
-    //         $stmt = $this->db->prepare($sql);
-    //         $stmt->execute();
-    //         $result = $stmt->fetchAll(PDO::FETCH_CLASS, AvailableTables::class);
-    //         $stmt->closeCursor();
-
-    //         return $result;
-    //     } catch (PDOException $error) {
-    //         throw new Exception('Error: ' . $error->getMessage());
-    //     }
-    // }
+    use SQLRequest;
 
     /**
      * @param int $number
@@ -104,37 +40,4 @@ final class AvailableTablesRepository
             throw new Exception('Error: ' . $error->getMessage());
         }
     }
-    // /**
-    //  * @return void
-    //  */
-    // public function delete(): void
-    // {
-    //     $sql = 'DELETE FROM available_tables';
-
-    //     try {
-    //         $stmt = $this->db->prepare($sql);
-    //         $stmt->execute();
-    //         $stmt->closeCursor();
-    //     } catch (PDOException $error) {
-    //         throw new Exception('Error: ' . $error->getMessage());
-    //     }
-    // }
-
-    // /**
-    //  * @return string
-    //  */
-    // public function getUuid(): string
-    // {
-    //     $sql = 'SELECT BIN_TO_UUID(uuid) AS uuid FROM available_tables';
-    //     try {
-    //         $stmt = $this->db->prepare($sql);
-    //         $stmt->execute();
-    //         $result = $stmt->fetchColumn();
-    //         $stmt->closeCursor();
-
-    //         return $result;
-    //     } catch (PDOException $error) {
-    //         throw new Exception('Error: ' . $error->getMessage());
-    //     }
-    // }
 }

@@ -18,7 +18,6 @@ final class HomeController
     // constructor
     public function __construct()
     {
-        $this->usersRepo = new UsersRepository();
     }
 
 
@@ -60,7 +59,8 @@ final class HomeController
                     $this->render('home', $viewData);
                 } else {
                     $mailSanitize = htmlentities($mail);
-                    $getUser = $this->usersRepo->readOne($mailSanitize);
+                    $userRepo = new UsersRepository();
+                    $getUser = $userRepo->findOne('users', 'mail', $mailSanitize);
                     $getPasswordUser = $getUser->getPassword();
                     if (password_verify($password, $getPasswordUser)) {
                         $getRole = $getUser->getRole();

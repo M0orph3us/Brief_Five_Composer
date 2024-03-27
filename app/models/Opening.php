@@ -28,6 +28,19 @@ final class Opening
 
     // setters & getters
 
+
+    /**
+     * @param string $uuid
+     *
+     * @return  self
+     */
+    public function setUuid(string $uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
+    }
+
     /**
      * @return string
      */
@@ -37,11 +50,35 @@ final class Opening
     }
 
     /**
+     * @param string $opening_day
+     *
+     * @return  self
+     */
+    public function setOpening_day(string $opening_day): self
+    {
+        $this->opening_day = $opening_day;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getOpening_day(): string
     {
         return $this->opening_day;
+    }
+
+    /**
+     * @param string $opening_hour
+     *
+     * @return  self
+     */
+    public function setOpening_hour(string $opening_hour): self
+    {
+        $this->opening_hour = $opening_hour;
+
+        return $this;
     }
 
     /**
