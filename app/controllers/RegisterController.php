@@ -75,15 +75,13 @@ final class RegisterController
                     ];
 
                     $newUser = $this->usersRepo->create($data);
-                    debug($newUser->getFirstname());
                     $firstname = $newUser->getFirstname();
                     $csrfRegister = $this->createCSRFToken('csrfRegister');
-                    $_SESSION['userIsConnected'] = true;
                     $viewData = [
                         'csrfRegister' => $csrfRegister,
                         'firstname' => $firstname
                     ];
-                    $this->render('register', $viewData);
+                    $this->render('home', $viewData);
                 }
             }
         }
@@ -94,8 +92,7 @@ final class RegisterController
         $csrfRegister = $this->createCSRFToken('csrfRegister');
 
         $viewData = [
-            'test' => 'test',
-            'csrfregister' => $csrfRegister
+            'csrfRegister' => $csrfRegister
         ];
 
         $this->render('register', $viewData);

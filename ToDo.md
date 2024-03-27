@@ -1,7 +1,7 @@
-# TODO : HomeController-> login and their constraints + other controllers & all Repo & frontend
+# TODO : other controllers & all Repo & frontend
 
-# WIP : RegisterController -> tester pq userRegister n'est pas appelé.
+# WIP :
 
-# TO CHECK :
+# TO CHECK : Why in my RegisterController my NotImput is not functionnal when is false
 
-# VALID :
+# VALID : RegisterController, HomeController

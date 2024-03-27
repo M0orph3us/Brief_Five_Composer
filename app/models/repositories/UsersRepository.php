@@ -32,9 +32,9 @@ final class UsersRepository
         try {
 
             $params = [
-                'firstname' => $data['firstnameSanitize'],
-                'lastname' => $data['lastnameSanitize'],
-                'mail' => $data['mailSanitize'],
+                'firstname' => $data['firstnameRegisterSanitize'],
+                'lastname' => $data['lastnameRegisterSanitize'],
+                'mail' => $data['mailRegisterSanitize'],
                 'password' => $data['passwordHash']
             ];
 
@@ -42,7 +42,7 @@ final class UsersRepository
             $stmt->execute($params);
             $stmt->closeCursor();
 
-            $params['uuid'] = $this->getUuid($data['mailSanitize']);
+            $params['uuid'] = $this->getUuid($data['mailRegisterSanitize']);
             $user = new Users($params);
             return $user;
         } catch (PDOException $error) {
@@ -54,11 +54,11 @@ final class UsersRepository
      * @param string $uuid
      * @return Users
      */
-    public function readOne(string $uuid): Users
+    public function readOne(string $mail): Users
     {
-        $sql = 'SELECT * FROM users WHERE uuid = UUID_TO_BIN(:uuid)';
+        $sql = 'SELECT * FROM users WHERE mail = :mail';
         $params = [
-            'uuid' => $uuid
+            'mail' => $mail
         ];
         try {
             $stmt = $this->db->prepare($sql);

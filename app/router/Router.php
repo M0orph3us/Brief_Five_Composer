@@ -18,14 +18,22 @@ class Router
         switch ($uri) {
             case URL_HOMEPAGE:
                 $home = new HomeController();
-                $home->homePage();
+                if ($method === 'POST') {
+                    $home->login();
+                }
+                if ($method === 'GET') {
+                    $home->homePage();
+                }
+
                 break;
 
             case URL_REGISTER:
                 $register = new RegisterController();
-                $register->registerPage();
                 if ($method === 'POST') {
                     $register->userRegister();
+                }
+                if ($method === 'GET') {
+                    $register->registerPage();
                 }
                 break;
 

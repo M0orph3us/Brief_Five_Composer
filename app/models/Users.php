@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use DateTimeImmutable;
+
 final class Users
 {
     // params
@@ -167,6 +169,8 @@ final class Users
      */
     public function getCreated_at(): string
     {
-        return $this->created_at;
+        $date = new DateTimeImmutable($this->created_at);
+        $dateFormat = $date->format('d/m/Y');
+        return $dateFormat;
     }
 }
