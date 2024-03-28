@@ -11,9 +11,9 @@ trait SQLRequest
 
     /**
      * @param string $table
-     * @return object[]
+     * @return object[] | null
      */
-    public function findAll(string $table)
+    public function findAll(string $table): ?array
     {
         $Table = ucfirst($table);
         $sql = "SELECT * FROM $table";
@@ -30,12 +30,12 @@ trait SQLRequest
     }
 
     /**
-     * @param string $table
-     * @param string $where
-     * @param string $data
-     * @return object
+     * @param  string $table
+     * @param  string $where
+     * @param  string $data
+     * @return object|null
      */
-    public function findOne(string $table, string $where, string $data)
+    public function findOne(string $table, string $where, string $data): ?object
     {
         $Table = ucfirst($table);
         $sql = "SELECT * FROM $table WHERE $where = :$where";
@@ -55,8 +55,8 @@ trait SQLRequest
         }
     }
     /**
-     * @param string $table
-     * @param string $uuid
+     * @param  string $table
+     * @param  string $uuid
      * @return void
      */
     public function delete(string $table, string $uuid): void
@@ -69,16 +69,19 @@ trait SQLRequest
             $stmt = $this->db->prepare($sql);
             $stmt->execute($params);
             $stmt->closeCursor();
+            $_SESSION[$table . 'isDeleted'] = true;
         } catch (PDOException $error) {
             throw new Exception('Error: ' . $error->getMessage());
         }
     }
 
     /**
-     * @param string $table
+     * @param  string $table
+     * @param  string $where
+     * @param  string $data
      * @return string
      */
-    public function getUuid(string $table, string $where, string $data)
+    public function getUuid(string $table, string $where, string $data): string
     {
         $sql = "SELECT BIN_TO_UUID(uuid) AS uuid FROM $table WHERE $where = :$where";
         $params = [

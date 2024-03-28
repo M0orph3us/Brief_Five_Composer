@@ -26,7 +26,7 @@ final class TeamsRepository
 
     /**
      * @param array<string, string> $data
-     * @return Teams
+     * @return void
      */
     public function create(array $data): void
     {
@@ -43,14 +43,15 @@ final class TeamsRepository
             $stmt = $this->db->prepare($sql);
             $stmt->execute($params);
             $stmt->closeCursor();
+            $_SESSION['isCreatedTeam'] = true;
         } catch (PDOException $error) {
             throw new Exception('Error: ' . $error->getMessage());
         }
     }
 
     /**
-     * @param string $uuid
-     * @param array<string, string> $data
+     * @param  string $uuid
+     * @param  array<string, string>  $data
      * @return void
      */
     public function update(string $uuid, array $data): void
@@ -68,6 +69,7 @@ final class TeamsRepository
             $stmt = $this->db->prepare($sql);
             $stmt->execute($params);
             $stmt->closeCursor();
+            $_SESSION['isUpdatedTeam'] = true;
         } catch (PDOException $error) {
             throw new Exception('Error: ' . $error->getMessage());
         }

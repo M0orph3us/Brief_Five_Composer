@@ -2,48 +2,64 @@
 
 namespace app\controllers;
 
+use app\models\repositories\RelationalDataRepository;
 use app\models\repositories\ReservationsRepository;
 use app\models\repositories\TeamsRepository;
+
+use app\services\Constraints;
+use app\services\CSRFToken;
+use app\services\IssetFormData;
 use app\services\Response;
+use app\services\Sanitize;
 
 final class AdminController
 {
     // params
-    private $reservationsRepo;
-    private $teamsRepo;
 
     // constructor
     public function __construct()
     {
-        $this->reservationsRepo = new ReservationsRepository();
-        $this->teamsRepo = new TeamsRepository();
     }
 
     // methods
     use Response;
+    use CSRFToken;
+    use Constraints;
+    use IssetFormData;
+    use Sanitize;
+
 
     public function adminPage()
     {
-        $allReservations = $this->reservationsRepo->readAll();
-        $teams = $this->teamsRepo->readAll();
+
+        $teamsRepo = new TeamsRepository();
+        $relationalDataRepo = new RelationalDataRepository();
+
+        $allReservationsWithTeams = $relationalDataRepo->getAllReservationsWithTeams();
+        $allReservationsWithoutTeams = $relationalDataRepo->getAllResevationsWhitoutTeams();
+        $allTeams = $teamsRepo->findAll('teams');
 
         $viewData = [
-            'allReservations' => $allReservations,
-            'teams' => $teams
+            'allteams' => $allTeams,
+            'allReservationsWithTeams' => $allReservationsWithTeams,
+            'allReservationsWithoutTeams' => $allReservationsWithoutTeams
         ];
 
         $this->render('admin', $viewData);
     }
 
-    public function allTeams()
+    public function assignTeamsByReservations()
     {
-        $getTeams = $this->teamsRepo;
-        $getAllTeams = $getTeams->readAll();
+        $reservationsRepo = new ReservationsRepository();
+        $reservationsRepo->assignReservation();
+        header('Location: /Brief_Five_Composer/adminboard');
+    }
 
-        $viewData = [
-            'getAllTeams' => $getAllTeams
-        ];
+    public function createNewTeam()
+    {
+        $teamsRepo = new TeamsRepository();
+        $teamsRepo->create();
 
-        $this->render('admin', $viewData);
+        header('Location: /Brief_Five_Composer/adminboard');
     }
 }

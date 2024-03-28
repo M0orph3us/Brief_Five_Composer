@@ -29,10 +29,10 @@ final class Opening
     // setters & getters
 
 
+
     /**
-     * @param string $uuid
-     *
-     * @return  self
+     * @param  string $uuid
+     * @return self
      */
     public function setUuid(string $uuid): self
     {
@@ -51,7 +51,6 @@ final class Opening
 
     /**
      * @param string $opening_day
-     *
      * @return  self
      */
     public function setOpening_day(string $opening_day): self
@@ -71,7 +70,6 @@ final class Opening
 
     /**
      * @param string $opening_hour
-     *
      * @return  self
      */
     public function setOpening_hour(string $opening_hour): self

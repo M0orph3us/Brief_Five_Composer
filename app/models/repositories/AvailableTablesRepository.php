@@ -36,6 +36,7 @@ final class AvailableTablesRepository
             $stmt = $this->db->prepare($sql);
             $stmt->execute($params);
             $stmt->closeCursor();
+            $_SESSION['isUpdatedQuantityTables'] = true;
         } catch (PDOException $error) {
             throw new Exception('Error: ' . $error->getMessage());
         }

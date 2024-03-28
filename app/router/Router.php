@@ -3,10 +3,8 @@
 namespace app\router;
 
 use app\controllers\AdminController;
-use app\controllers\HomeController;
-use app\controllers\ProfilController;
-use app\controllers\ReservationController;
-use app\controllers\RegisterController;
+use app\controllers\ReservationsController;
+use app\controllers\UserController;
 
 require __DIR__ . '/../../config/configRouter.php';
 
@@ -17,43 +15,69 @@ class Router
         $method = $_SERVER['REQUEST_METHOD'];
         switch ($uri) {
             case URL_HOMEPAGE:
-                $home = new HomeController();
-                if ($method === 'POST') {
-                    $home->login();
-                }
+                $user = new UserController();
                 if ($method === 'GET') {
-                    $home->homePage();
+                    $user->homePage();
                 }
-
+                if ($method === 'POST') {
+                    $user->login();
+                }
                 break;
 
             case URL_REGISTER:
-                $register = new RegisterController();
-                if ($method === 'POST') {
-                    $register->userRegister();
-                }
+                $user = new UserController();
                 if ($method === 'GET') {
-                    $register->registerPage();
+                    $user->registerPage();
+                }
+                if ($method === 'POST') {
+                    $user->userRegister();
+                }
+                break;
+
+            case URL_OPENINGDAY:
+                $user = new UserController();
+                if ($method === 'GET') {
+                    $user->openingDayPage();
                 }
                 break;
 
 
             case URL_PROFILPAGE:
-                $profil = new ProfilController();
-                $profil->profilPage();
+                $user = new UserController();
+                if ($method === 'GET') {
+                    $user->profilPage();
+                }
+                if ($method === 'PUT') {
+                    $user->updateProfil();
+                }
+                if ($method === 'DELETE') {
+                    $user->deleteProfil();
+                }
                 break;
 
             case URL_RESERVATIONPAGE:
-                $reservation = new ReservationController();
+                $reservation = new ReservationsController();
+                if ($method === 'GET') {
+                }
+                if ($method === 'POST') {
+                    $reservation->createReservation();
+                }
                 break;
 
             case URL_ADMINPAGE:
                 $admin = new AdminController();
+                if ($method === 'GET') {
+                    $admin->adminPage();
+                }
+                if ($method === 'POST') {
+                }
                 break;
 
             case URL_LOGOUT:
-                $logout = new HomeController();
-                $logout->logout();
+                $logout = new UserController();
+                if ($method === 'GET') {
+                    $logout->logout();
+                }
                 break;
 
 

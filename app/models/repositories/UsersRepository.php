@@ -45,6 +45,8 @@ final class UsersRepository
 
             $params['uuid'] = $this->getUuid('Users', 'mail', $data['mailRegisterSanitize']);
             $user = new Users($params);
+            $firstname = $user->getFirstname();
+            $_SESSION['isRegisted'] = $firstname;
             return $user;
         } catch (PDOException $error) {
             throw new Exception('Error: ' . $error->getMessage());
@@ -71,6 +73,7 @@ final class UsersRepository
             $stmt = $this->db->prepare($sql);
             $stmt->execute($params);
             $stmt->closeCursor();
+            $_SESSION['isUpdated'] = true;
         } catch (PDOException $error) {
             throw new Exception('Error: ' . $error->getMessage());
         }
