@@ -9,6 +9,7 @@ use app\services\CSRFToken;
 use app\services\Sanitize;
 use app\services\IssetFormData;
 use app\services\Constraints;
+use DateTimeImmutable;
 
 final class ReservationsController
 {
@@ -41,6 +42,21 @@ final class ReservationsController
 
     public function createReservation()
     {
+
+        if ($this->verifyCSRFToken($_POST['csrfReservation'], $_SESSION['csrfReservation'])) {
+            if ($this->issetFormData($_POST)) {
+                if ($this->notEmpty($_POST)) {
+                    $date = new DateTimeImmutable($_POST['reserved-on']);
+                    $dateFormated = $date->format('Y-m-d');
+                    $data = [
+                        'uuidUsers' => $_SESSION['uuidUser'],
+                        'numberOfPersons' => $_POST['number-of-person'],
+                        'babyChair' => $_POST['chair-baby'],
+                        'reservedOn' => $dateFormated
+                    ];
+                }
+            }
+        }
         $reservationsRepo = new ReservationsRepository();
         $reservationsRepo->createReservation($data);
 

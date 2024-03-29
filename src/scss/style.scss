@@ -32,6 +32,7 @@ svg {
 input,
 button,
 textarea,
+label,
 select {
   font: inherit;
 }
@@ -84,6 +85,22 @@ body {
 body {
   z-index: 1;
   // font-family: "";
+  background-image: url("../../public/assets/imgs/bcg-img.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  p,
+  a,
+  label,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  th,
+  tr {
+    color: $text-color;
+  }
 }
 
 /*/////////////////////////////// RESPONSIVE MOBIL 360px ///////////////////////////////////////*/
@@ -95,11 +112,90 @@ body {
 /*//////////////////////////////////// ALERTS //////////////////////////////////////////////*/
 
 /*//////////////////////////////////// HEADER ////////////////////////////////////////////*/
+header {
+  a {
+    font-weight: 900 !important;
+  }
+}
 
 /*//////////////////////////////////// MAIN //////////////////////////////////////////////*/
 
 main {
   flex: 1;
+  // .bcg-404 {
+
+  // }
+  .opening-days-container,
+  .register-container,
+  .home-container,
+  .login-container,
+  .admin-container,
+  .teams-container,
+  .reservations-container,
+  .assign-container,
+  .reservation-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    column-gap: 20px;
+    form {
+      display: flex;
+      flex-direction: column;
+      label,
+      button {
+        text-transform: uppercase;
+        font-weight: 700;
+        padding: 5px;
+        cursor: pointer;
+      }
+      input,
+      label,
+      button {
+        margin-top: 20px;
+      }
+    }
+  }
+
+  .admin-container {
+    .btnAdmin-container {
+      button {
+        padding: 5px;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+    }
+    .reservations-container {
+      h2 {
+        margin: 20px 0;
+      }
+      .reservation-with-teams-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        .cards-with-teams-container {
+          padding: 10px;
+          border: 2px solid $text-color;
+          border-radius: 5px;
+          width: 335px;
+          height: max-content;
+          background-color: rgba(245, 245, 220, 0.158);
+        }
+      }
+      .reservation-without-teams-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        .cards-without-teams-container {
+          padding: 10px;
+          border: 2px solid $text-color;
+          border-radius: 5px;
+          width: 335px;
+          height: max-content;
+          background-color: rgba(245, 245, 220, 0.158);
+        }
+      }
+    }
+  }
 }
 
 /*//////////////////////////////////// FOOTER ////////////////////////////////////////////*/

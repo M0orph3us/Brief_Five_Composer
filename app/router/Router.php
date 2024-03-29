@@ -6,8 +6,6 @@ use app\controllers\AdminController;
 use app\controllers\ReservationsController;
 use app\controllers\UserController;
 
-require __DIR__ . '/../../config/configRouter.php';
-
 class Router
 {
     public static function route($uri)
@@ -19,9 +17,6 @@ class Router
                 if ($method === 'GET') {
                     $user->homePage();
                 }
-                if ($method === 'POST') {
-                    $user->login();
-                }
                 break;
 
             case URL_REGISTER:
@@ -31,6 +26,16 @@ class Router
                 }
                 if ($method === 'POST') {
                     $user->userRegister();
+                }
+                break;
+
+            case URL_LOGIN:
+                $user = new UserController();
+                if ($method === 'GET') {
+                    $user->loginPage();
+                }
+                if ($method === 'POST') {
+                    $user->login();
                 }
                 break;
 
@@ -58,6 +63,7 @@ class Router
             case URL_RESERVATIONPAGE:
                 $reservation = new ReservationsController();
                 if ($method === 'GET') {
+                    $reservation->reservationPage();
                 }
                 if ($method === 'POST') {
                     $reservation->createReservation();
@@ -70,6 +76,7 @@ class Router
                     $admin->adminPage();
                 }
                 if ($method === 'POST') {
+                    $admin->assignTeamsByReservations();
                 }
                 break;
 

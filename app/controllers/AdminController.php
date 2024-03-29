@@ -50,9 +50,13 @@ final class AdminController
 
     public function assignTeamsByReservations()
     {
+        if ($this->issetFormData($_POST)) {
+            $uuidTeams = $_POST['select-teams'];
+            $uuidReservations = $_POST['select-reservations'];
+        }
         $reservationsRepo = new ReservationsRepository();
-        $reservationsRepo->assignReservation();
-        header('Location: /Brief_Five_Composer/adminboard');
+        $reservationsRepo->assignReservation($uuidTeams, $uuidReservations);
+        header('Location: ' . URL_ADMINPAGE);
     }
 
     public function createNewTeam()
@@ -60,6 +64,6 @@ final class AdminController
         $teamsRepo = new TeamsRepository();
         $teamsRepo->create();
 
-        header('Location: /Brief_Five_Composer/adminboard');
+        header('Location: ' . URL_ADMINPAGE);
     }
 }

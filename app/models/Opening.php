@@ -5,7 +5,7 @@ namespace app\models;
 final class Opening
 {
     // params
-    private string $uuid, $opening_day, $opening_hour;
+    private string $uuid, $opening_day, $morning_opening_hour, $morning_closing_hour, $evening_opening_hour, $evening_closing_hour, $uuidFormated;
 
     // constructor
     public function __construct(array $data = null)
@@ -16,6 +16,11 @@ final class Opening
     }
 
     // function to hydrate
+
+    /**
+     * @param  array<string,mixed> $data
+     * @return void
+     */
     private function hydrate(array $data): void
     {
         foreach ($data as $key => $value) {
@@ -69,12 +74,20 @@ final class Opening
     }
 
     /**
-     * @param string $opening_hour
-     * @return  self
+     * @return string
      */
-    public function setOpening_hour(string $opening_hour): self
+    public function getMorning_opening_hour(): string
     {
-        $this->opening_hour = $opening_hour;
+        return $this->morning_opening_hour;
+    }
+
+    /**
+     * @param  string $morning_opening_hour
+     * @return self
+     */
+    public function setMorning_opening_hour(string $morning_opening_hour): self
+    {
+        $this->morning_opening_hour = $morning_opening_hour;
 
         return $this;
     }
@@ -82,8 +95,77 @@ final class Opening
     /**
      * @return string
      */
-    public function getOpening_hour(): string
+    public function getMorning_closing_hour(): string
     {
-        return $this->opening_hour;
+        return $this->morning_closing_hour;
+    }
+
+    /**
+     * @param  string $morning_closing_hour
+     * @return self
+     */
+    public function setMorning_closing_hour(string $morning_closing_hour): self
+    {
+        $this->morning_closing_hour = $morning_closing_hour;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEvening_opening_hour(): string
+    {
+        return $this->evening_opening_hour;
+    }
+
+    /**
+     * @param  string $evening_opening_hour
+     * @return self
+     */
+    public function setEvening_opening_hour(string $evening_opening_hour): self
+    {
+        $this->evening_opening_hour = $evening_opening_hour;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEvening_closing_hour(): string
+    {
+        return $this->evening_closing_hour;
+    }
+
+    /**
+     * @param  string $evening_closing_hour
+     * @return self
+     */
+    public function setEvening_closing_hour(string $evening_closing_hour): self
+    {
+        $this->evening_closing_hour = $evening_closing_hour;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of uuidFormated
+     */
+    public function getUuidFormated()
+    {
+        return $this->uuidFormated;
+    }
+
+    /**
+     * Set the value of uuidFormated
+     *
+     * @return  self
+     */
+    public function setUuidFormated($uuidFormated)
+    {
+        $this->uuidFormated = $uuidFormated;
+
+        return $this;
     }
 }

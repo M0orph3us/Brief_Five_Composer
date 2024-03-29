@@ -16,6 +16,11 @@ final class ToAssign
     }
 
     // function to hydrate
+
+    /**
+     * @param  array<string,mixed> $data
+     * @return void
+     */
     private function hydrate(array $data): void
     {
         foreach ($data as $key => $value) {

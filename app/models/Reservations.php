@@ -7,7 +7,7 @@ use DateTime;
 final class Reservations
 {
     // params
-    private string $uuid, $uuid_users, $reserved_on;
+    private string $uuid, $uuid_users, $reserved_on, $uuidFormated;
     private int $number_of_persons;
     private bool $baby_chair;
 
@@ -20,6 +20,11 @@ final class Reservations
     }
 
     // function to hydrate
+
+    /**
+     * @param  array<string,mixed> $data
+     * @return void
+     */
     private function hydrate(array $data): void
     {
         foreach ($data as $key => $value) {
@@ -131,5 +136,25 @@ final class Reservations
     public function getUuid_users(): string
     {
         return $this->uuid_users;
+    }
+
+    /**
+     * Get the value of uuidFormated
+     */
+    public function getUuidFormated()
+    {
+        return $this->uuidFormated;
+    }
+
+    /**
+     * Set the value of uuidFormated
+     *
+     * @return  self
+     */
+    public function setUuidFormated($uuidFormated)
+    {
+        $this->uuidFormated = $uuidFormated;
+
+        return $this;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+// This trait is only functional with the same structure of the app and with uuids
 
 namespace app\services;
 
@@ -16,7 +17,7 @@ trait SQLRequest
     public function findAll(string $table): ?array
     {
         $Table = ucfirst($table);
-        $sql = "SELECT * FROM $table";
+        $sql = "SELECT $table.*, BIN_TO_UUID(uuid) AS uuid FROM $table";
         try {
             $stmt = $this->db->prepare($sql);
             $stmt->execute();
@@ -38,7 +39,7 @@ trait SQLRequest
     public function findOne(string $table, string $where, string $data): ?object
     {
         $Table = ucfirst($table);
-        $sql = "SELECT * FROM $table WHERE $where = :$where";
+        $sql = "SELECT $table.*, BIN_TO_UUID(uuid) AS uuid FROM $table WHERE $where = :$where";
         $params = [
             $where => $data
         ];
@@ -74,6 +75,8 @@ trait SQLRequest
             throw new Exception('Error: ' . $error->getMessage());
         }
     }
+
+
 
     /**
      * @param  string $table

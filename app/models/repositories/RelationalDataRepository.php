@@ -4,7 +4,6 @@ namespace app\models\repositories;
 
 use app\class\Database;
 use app\models\Reservations;
-use app\services\SQLRequest;
 use Exception;
 use PDO;
 use PDOException;
@@ -22,7 +21,6 @@ final class RelationalDataRepository
     }
 
     // CRUD
-    use SQLRequest;
 
     /**
      * @param  string $uuid_users
@@ -100,7 +98,7 @@ final class RelationalDataRepository
     {
         $sql =
             "SELECT
-                r.uuid,
+                BIN_TO_UUID(r.uuid) AS uuid,
                 DATE_FORMAT(r.reserved_on, '%d/%m/%Y') AS formated_date,
                 r.number_of_persons,
                 r.baby_chair,

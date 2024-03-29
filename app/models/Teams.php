@@ -5,7 +5,7 @@ namespace app\models;
 final class Teams
 {
     // params
-    private string $uuid, $firstname, $name;
+    private string $uuid, $firstname, $lastname, $uuidFormated;
 
     // constructor
     public function __construct(array $data = null)
@@ -16,6 +16,11 @@ final class Teams
     }
 
     // function to hydrate
+
+    /**
+     * @param  array<string,mixed> $data
+     * @return void
+     */
     private function hydrate(array $data): void
     {
         foreach ($data as $key => $value) {
@@ -69,22 +74,41 @@ final class Teams
     }
 
     /**
-     * @param string $name
-     *
-     * @return  self
+     * @return string
      */
-    public function setName(string $name): self
+    public function getLastname(): string
     {
-        $this->name = $name;
+        return $this->lastname;
+    }
+
+    /**
+     * @param  string $lastname
+     * @return self
+     */
+    public function setLastname(string $lastname): self
+    {
+        $this->lastname = $lastname;
 
         return $this;
     }
 
     /**
-     * @return string
-     */
-    public function getName(): string
+     * Get the value of uuidFormated
+     */ 
+    public function getUuidFormated()
     {
-        return $this->name;
+        return $this->uuidFormated;
+    }
+
+    /**
+     * Set the value of uuidFormated
+     *
+     * @return  self
+     */ 
+    public function setUuidFormated($uuidFormated)
+    {
+        $this->uuidFormated = $uuidFormated;
+
+        return $this;
     }
 }

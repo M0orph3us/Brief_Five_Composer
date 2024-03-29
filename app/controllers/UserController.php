@@ -55,14 +55,22 @@ final class UserController
         $this->render('register', $viewData);
     }
 
-    public function homePage()
+    public function loginPage()
     {
         $csrfLogin = $this->createCSRFToken('csrfLogin');
 
         $viewData = [
             'csrfLogin' => $csrfLogin
         ];
-        $this->render('home', $viewData);
+        $this->render('login', $viewData);
+    }
+
+    public function homePage()
+    {
+        unset($_SESSION['csrfLogin']);
+        unset($_SESSION['csrfRegister']);
+
+        $this->render('home');
     }
 
     public function openingDayPage()
@@ -74,7 +82,7 @@ final class UserController
             'getOpeningDay' => $getOpeningDay
         ];
 
-        $this->render('openingDays', $viewData);
+        $this->render('opening_Days', $viewData);
     }
 
     public function userRegister()
@@ -103,10 +111,8 @@ final class UserController
                         $error['password'] = 'Your confirmation password does not match the 1st';
                     };
                 } else {
-                    $notEmpty = $this->notEmpty($_POST);
-                    foreach ($notEmpty as $key => $value) {
-                        $error[$key] = $value;
-                    }
+                    $error = [];
+                    $error += $this->notEmpty($_POST);
                 };
 
                 if (!empty($error)) {
@@ -128,7 +134,7 @@ final class UserController
                     $usersRepo = new UsersRepository();
                     $usersRepo->create($data);
 
-                    header('Location: /Brief_Five_Composer/');
+                    header('Location:' . URL_HOMEPAGE);
                 }
             }
         }
@@ -142,7 +148,8 @@ final class UserController
                     $mail = $_POST['mailLogin'];
                     $password = $_POST['passwordLogin'];
                 } else {
-                    $error['empty'] = $this->notEmpty($_POST);
+                    $error = [];
+                    $error += $this->notEmpty($_POST);
                 };
 
                 if (!empty($error)) {
@@ -158,32 +165,34 @@ final class UserController
                     $getUser = $userRepo->findOne('users', 'mail', $mailSanitize);
                     $getPasswordUser = $getUser->getPassword();
                     if (password_verify($password, $getPasswordUser)) {
-                        $getUuidUser = $getUser->getUuid();
-                        $_SESSION['uuidUser'] = $getUuidUser;
+
                         $getRole = $getUser->getRole();
                         if ($getRole === 'user') {
+                            unset($_SESSION['adminIsConnected']);
+                            unset($_SESSION['superAdminIsConnected']);
                             $_SESSION['userIsConnected'] = true;
+                            $_SESSION['uuidUser'] = $getUser->getUuid();
                         }
                         if ($getRole === 'admin') {
+                            unset($_SESSION['superAdminIsConnected']);
+                            unset($_SESSION['userIsConnected']);
                             $_SESSION['adminIsConnected'] = true;
                         }
                         if ($getRole === 'super_admin') {
+                            unset($_SESSION['adminIsConnected']);
+                            unset($_SESSION['userIsConnected']);
                             $_SESSION['superAdminIsConnected'] = true;
                         }
-                        $csrfLogin = $this->createCSRFToken('csrfLogin');
-                        $firstname = $getUser->getFirstname();
-                        $viewData = [
-                            'csrfLogin' => $csrfLogin,
-                            'firstname' => $firstname
-                        ];
 
-                        $this->render('home', $viewData);
+                        header('Location: ' . URL_HOMEPAGE);
                     } else {
                         $error = 'This password does not match';
+                        $csrfLogin = $this->createCSRFToken('csrfLogin');
                         $viewData = [
-                            'wrongPassword' => $error
+                            'wrongPassword' => $error,
+                            'csrfLogin' => $csrfLogin
                         ];
-                        $this->render('home', $viewData);
+                        $this->render('login', $viewData);
                     }
                 }
             }
@@ -210,6 +219,6 @@ final class UserController
         session_start();
         session_destroy();
 
-        header('Location: /Brief_Five_Composer/');
+        header('Location:' . URL_HOMEPAGE);
     }
 }

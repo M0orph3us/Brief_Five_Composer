@@ -3,7 +3,6 @@
 namespace app\models\repositories;
 
 use app\class\Database;
-use app\models\Teams;
 use app\services\SQLRequest;
 use Exception;
 use PDOException;

@@ -32,6 +32,7 @@ svg {
 input,
 button,
 textarea,
+label,
 select {
   font: inherit;
 }
@@ -71,6 +72,22 @@ body {
 /*//////////////////////////////////// BODY //////////////////////////////////////////////*/
 body {
   z-index: 1;
+  background-image: url("../../public/assets/imgs/bcg-img.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+body p,
+body a,
+body label,
+body h1,
+body h2,
+body h3,
+body h4,
+body h5,
+body h6,
+body th,
+body tr {
+  color: white;
 }
 
 /*/////////////////////////////// RESPONSIVE MOBIL 360px ///////////////////////////////////////*/
@@ -80,9 +97,125 @@ body {
 
 /*//////////////////////////////////// ALERTS //////////////////////////////////////////////*/
 /*//////////////////////////////////// HEADER ////////////////////////////////////////////*/
+header a {
+  font-weight: 900 !important;
+}
+
 /*//////////////////////////////////// MAIN //////////////////////////////////////////////*/
 main {
   flex: 1;
+}
+main .opening-days-container,
+main .register-container,
+main .home-container,
+main .login-container,
+main .admin-container,
+main .teams-container,
+main .reservations-container,
+main .assign-container,
+main .reservation-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  column-gap: 20px;
+}
+main .opening-days-container form,
+main .register-container form,
+main .home-container form,
+main .login-container form,
+main .admin-container form,
+main .teams-container form,
+main .reservations-container form,
+main .assign-container form,
+main .reservation-container form {
+  display: flex;
+  flex-direction: column;
+}
+main .opening-days-container form label,
+main .opening-days-container form button,
+main .register-container form label,
+main .register-container form button,
+main .home-container form label,
+main .home-container form button,
+main .login-container form label,
+main .login-container form button,
+main .admin-container form label,
+main .admin-container form button,
+main .teams-container form label,
+main .teams-container form button,
+main .reservations-container form label,
+main .reservations-container form button,
+main .assign-container form label,
+main .assign-container form button,
+main .reservation-container form label,
+main .reservation-container form button {
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 5px;
+  cursor: pointer;
+}
+main .opening-days-container form input,
+main .opening-days-container form label,
+main .opening-days-container form button,
+main .register-container form input,
+main .register-container form label,
+main .register-container form button,
+main .home-container form input,
+main .home-container form label,
+main .home-container form button,
+main .login-container form input,
+main .login-container form label,
+main .login-container form button,
+main .admin-container form input,
+main .admin-container form label,
+main .admin-container form button,
+main .teams-container form input,
+main .teams-container form label,
+main .teams-container form button,
+main .reservations-container form input,
+main .reservations-container form label,
+main .reservations-container form button,
+main .assign-container form input,
+main .assign-container form label,
+main .assign-container form button,
+main .reservation-container form input,
+main .reservation-container form label,
+main .reservation-container form button {
+  margin-top: 20px;
+}
+main .admin-container .btnAdmin-container button {
+  padding: 5px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+main .admin-container .reservations-container h2 {
+  margin: 20px 0;
+}
+main .admin-container .reservations-container .reservation-with-teams-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+main .admin-container .reservations-container .reservation-with-teams-container .cards-with-teams-container {
+  padding: 10px;
+  border: 2px solid white;
+  border-radius: 5px;
+  width: 335px;
+  height: max-content;
+  background-color: rgba(245, 245, 220, 0.158);
+}
+main .admin-container .reservations-container .reservation-without-teams-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+main .admin-container .reservations-container .reservation-without-teams-container .cards-without-teams-container {
+  padding: 10px;
+  border: 2px solid white;
+  border-radius: 5px;
+  width: 335px;
+  height: max-content;
+  background-color: rgba(245, 245, 220, 0.158);
 }
 
 /*//////////////////////////////////// FOOTER ////////////////////////////////////////////*/

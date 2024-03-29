@@ -15,7 +15,7 @@ On his adminboard he can see all upcoming events as well as the list of voluntee
 ### Clone the project locally
 
 ```
-git clone git@github.com:M0orph3us/Brief-Four.git
+git clone https://github.com/M0orph3us/Brief_Five_Composer
 
 ```
 

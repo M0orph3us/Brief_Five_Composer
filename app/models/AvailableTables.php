@@ -5,7 +5,7 @@ namespace app\models;
 final class AvailableTables
 {
     // params
-    private string $uuid;
+    private string $uuid, $uuidFormated;
     private int $quantity_tables;
 
     // constructor
@@ -17,6 +17,11 @@ final class AvailableTables
     }
 
     // function to hydrate
+
+    /**
+     * @param  array<string,mixed> $data
+     * @return void
+     */
     private function hydrate(array $data): void
     {
         foreach ($data as $key => $value) {
@@ -67,5 +72,25 @@ final class AvailableTables
     public function getQuantity_tables(): int
     {
         return $this->quantity_tables;
+    }
+
+    /**
+     * Get the value of uuidFormated
+     */
+    public function getUuidFormated()
+    {
+        return $this->uuidFormated;
+    }
+
+    /**
+     * Set the value of uuidFormated
+     *
+     * @return  self
+     */
+    public function setUuidFormated($uuidFormated)
+    {
+        $this->uuidFormated = $uuidFormated;
+
+        return $this;
     }
 }
