@@ -2,6 +2,6 @@
 
 # WIP :
 
-# TO CHECK : Why in my RegisterController my NotImput is not functionnal when is false
+# TO CHECK :
 
 # VALID : RegisterController, HomeController
