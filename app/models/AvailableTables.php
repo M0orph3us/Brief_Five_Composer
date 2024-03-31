@@ -5,7 +5,7 @@ namespace app\models;
 final class AvailableTables
 {
     // params
-    private string $uuid, $uuidFormated;
+    private string $uuid;
     private int $quantity_tables;
 
     // constructor
@@ -72,25 +72,5 @@ final class AvailableTables
     public function getQuantity_tables(): int
     {
         return $this->quantity_tables;
-    }
-
-    /**
-     * Get the value of uuidFormated
-     */
-    public function getUuidFormated()
-    {
-        return $this->uuidFormated;
-    }
-
-    /**
-     * Set the value of uuidFormated
-     *
-     * @return  self
-     */
-    public function setUuidFormated($uuidFormated)
-    {
-        $this->uuidFormated = $uuidFormated;
-
-        return $this;
     }
 }

@@ -23,9 +23,9 @@ final class RelationalDataRepository extends Database
 
     /**
      * @param  string $uuid_users
-     * @return Reservations
+     * @return object[]
      */
-    public function getReservationByUser(string $uuid_users): Reservations
+    public function getReservationByUser(string $uuid_users): array
     {
         $sql =
             "SELECT
@@ -47,6 +47,7 @@ final class RelationalDataRepository extends Database
             $result = $stmt->fetchAll(PDO::FETCH_CLASS, Reservations::class);
             $stmt->closeCursor();
 
+
             return $result;
         } catch (PDOException $error) {
             throw new Exception('Error: ' . $error->getMessage());
@@ -54,9 +55,9 @@ final class RelationalDataRepository extends Database
     }
 
     /**
-     * @return array | false
+     * @return array
      */
-    public function getAllReservationsWithTeams(): array | false
+    public function getAllReservationsWithTeams(): array
     {
         $sql =
             "SELECT
@@ -91,9 +92,9 @@ final class RelationalDataRepository extends Database
     }
 
     /**
-     * @return array | false
+     * @return array
      */
-    public function getAllResevationsWhitoutTeams(): array | false
+    public function getAllResevationsWhitoutTeams(): array
     {
         $sql =
             "SELECT

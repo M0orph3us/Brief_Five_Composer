@@ -7,7 +7,7 @@ use DateTimeImmutable;
 final class Users
 {
     // params
-    private string $uuid, $firstname, $lastname, $mail, $password, $role, $created_at, $uuidFormated;
+    private string $uuid, $firstname, $lastname, $mail, $password, $role, $created_at;
 
     // contructor
     public function __construct(array $data = null)
@@ -177,25 +177,5 @@ final class Users
         $date = new DateTimeImmutable($this->created_at);
         $dateFormat = $date->format('d/m/Y');
         return $dateFormat;
-    }
-
-    /**
-     * Get the value of uuidFormated
-     */
-    public function getUuidFormated()
-    {
-        return $this->uuidFormated;
-    }
-
-    /**
-     * Set the value of uuidFormated
-     *
-     * @return  self
-     */
-    public function setUuidFormated($uuidFormated)
-    {
-        $this->uuidFormated = $uuidFormated;
-
-        return $this;
     }
 }

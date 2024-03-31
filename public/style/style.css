@@ -73,19 +73,6 @@ body {
 body {
   z-index: 1;
 }
-body p,
-body a,
-body label,
-body h1,
-body h2,
-body h3,
-body h4,
-body h5,
-body h6,
-body th,
-body tr {
-  color: white;
-}
 
 /*/////////////////////////////// RESPONSIVE MOBIL 360px ///////////////////////////////////////*/
 :root {

@@ -16,7 +16,7 @@ require_once __DIR__ . '/./includes/header.php';
                     <th>Lastname</th>
                 </tr>
                 <?php
-                foreach ($viewData['allteams'] as $key => $value) {
+                foreach ($viewData['allteams'] as $value) {
                     $firstnameTeam = $value->getFirstname();
                     $lastnameTeam = $value->getLastname();
                     echo "
@@ -30,7 +30,7 @@ require_once __DIR__ . '/./includes/header.php';
             <h2>Reservations With Staff Assigned</h2>
             <div class="reservation-with-teams-container">
                 <?php
-                foreach ($viewData['allReservationsWithTeams'] as $key => $value) {
+                foreach ($viewData['allReservationsWithTeams'] as $value) {
                     $date = $value['formated_date'];
                     $firstnameReservationsWithTeams = $value['user_firstname'];
                     $lastnameReservationsWithTeams = $value['user_lastname'];
@@ -50,7 +50,7 @@ require_once __DIR__ . '/./includes/header.php';
             <h2>Reservations Without Staff Assigned</h2>
             <div class="reservation-without-teams-container">
                 <?php
-                foreach ($viewData['allReservationsWithoutTeams'] as $key => $value) {
+                foreach ($viewData['allReservationsWithoutTeams'] as $value) {
                     $date = $value['formated_date'];
                     $firstnameReservationsWithoutTeams = $value['firstname'];
                     $lastnameReservationsWithoutTeams = $value['lastname'];
@@ -76,7 +76,7 @@ require_once __DIR__ . '/./includes/header.php';
                         $lastnameTeam = $value->getLastname();
                         $uuidTeams = $value->getUuid();
 
-                        echo "<option value=$uuidTeams>" . $firstnameTeam . " " . $lastnameTeam . "</option> ";
+                        echo "<option value=$uuidTeams>$firstnameTeam $lastnameTeam</option> ";
                     } ?>
                 </select>
                 <label for="select-reservations">Select Reservation</label>

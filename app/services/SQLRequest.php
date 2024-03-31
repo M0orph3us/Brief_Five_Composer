@@ -11,10 +11,40 @@ trait SQLRequest
 {
 
     /**
-     * @param string $table
-     * @return object[] | null
+     * @param  string  $table
+     * @param  array   $columnsValue
+     * @return boolean
      */
-    public function findAll(string $table): ?array
+    public function create(string $table, array $columnsValue): bool
+    {
+
+        foreach ($columnsValue as $key => $value) {
+            $params[$key] = $value;
+            $columns[] = $key;
+            $values[] = ":$key";
+        }
+        $columnsToUpdate = implode(", ", $columns);
+        $valuesToCreate = implode(", ", $values);
+
+        $sql = "INSERT INTO $table ($columnsToUpdate) VALUE($valuesToCreate)";
+        try {
+            $stmt = $this->getDb()->prepare($sql);
+            $stmt->execute($params);
+            $stmt->closeCursor();
+            return true;
+        } catch (PDOException $error) {
+            throw new Exception('Error: ' . $error->getMessage());
+            return false;
+        }
+    }
+
+
+
+    /**
+     * @param string $table
+     * @return object[]
+     */
+    public function findAll(string $table): array
     {
         $Table = ucfirst($table);
         $sql = "SELECT $table.*, BIN_TO_UUID(uuid) AS uuid FROM $table";
@@ -23,7 +53,6 @@ trait SQLRequest
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_CLASS, "app\\models\\$Table");
             $stmt->closeCursor();
-
             return $result;
         } catch (PDOException $error) {
             throw new Exception('Error: ' . $error->getMessage());
@@ -34,14 +63,19 @@ trait SQLRequest
      * @param  string $table
      * @param  string $where
      * @param  string $data
-     * @return object|null
+     * @return object|false
      */
-    public function findOne(string $table, string $where, string $data): ?object
+    public function findOne(string $table, string $where, string $paramsData): object | false
     {
+        if ($where === 'uuid') {
+            $data = "UUID_TO_BIN(:$where)";
+        } else {
+            $data = ":$where";
+        }
         $Table = ucfirst($table);
-        $sql = "SELECT $table.*, BIN_TO_UUID(uuid) AS uuid FROM $table WHERE $where = :$where";
+        $sql = "SELECT $table.*, BIN_TO_UUID(uuid) AS uuid FROM $table WHERE $where = $data";
         $params = [
-            $where => $data
+            $where => $paramsData
         ];
         try {
             $stmt = $this->getDb()->prepare($sql);
@@ -49,18 +83,48 @@ trait SQLRequest
             $result = $stmt->setFetchMode(PDO::FETCH_CLASS, "app\\models\\$Table");
             $result = $stmt->fetch();
             $stmt->closeCursor();
-
             return $result;
         } catch (PDOException $error) {
             throw new Exception('Error: ' . $error->getMessage());
         }
     }
+
+    /**
+     * @param  string  $table
+     * @param  array   $setColumnsData
+     * @param  string  $where
+     * @return boolean
+     */
+    public function update(string $table, array $setColumnsData, string $where): bool
+    {
+        foreach ($setColumnsData as $key => $value) {
+            $params[$key] = $value;
+            $columns[] = "$key = :$key";
+            if ($where === 'uuid') {
+                $data = "UUID_TO_BIN(:$where)";
+            } else {
+                $data = ":$where";
+            }
+        }
+        $setColumns = implode(", ", $columns);
+        $sql = "UPDATE $table SET $setColumns  WHERE $where = $data";
+        try {
+            $stmt = $this->getDb()->prepare($sql);
+            $stmt->execute($params);
+            $stmt->closeCursor();
+            return true;
+        } catch (PDOException $error) {
+            throw new Exception('Error: ' . $error->getMessage());
+            return false;
+        }
+    }
+
     /**
      * @param  string $table
      * @param  string $uuid
      * @return void
      */
-    public function delete(string $table, string $uuid): void
+    public function delete(string $table, string $uuid): bool
     {
         $sql = "DELETE FROM $table WHERE uuid = UUID_TO_BIN(:uuid)";
         $params = [
@@ -70,13 +134,12 @@ trait SQLRequest
             $stmt = $this->getDb()->prepare($sql);
             $stmt->execute($params);
             $stmt->closeCursor();
-            $_SESSION[$table . 'isDeleted'] = true;
+            return true;
         } catch (PDOException $error) {
             throw new Exception('Error: ' . $error->getMessage());
+            return false;
         }
     }
-
-
 
     /**
      * @param  string $table
