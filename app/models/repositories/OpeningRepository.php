@@ -7,16 +7,13 @@ use app\services\SQLRequest;
 use Exception;
 use PDOException;
 
-final class OpeningRepository
+final class OpeningRepository extends Database
 {
-    // params
-    private $db;
 
     // contructor
     public function __construct()
     {
-        $this->db = new Database();
-        $this->db = $this->db->getDb();
+        parent::__construct();
     }
 
     // CRUD
@@ -38,7 +35,7 @@ final class OpeningRepository
             'opening_day' => $data['opening_day']
         ];
         try {
-            $stmt = $this->db->prepare($sql);
+            $stmt = $this->getDb()->prepare($sql);
             $stmt->execute($params);
             $stmt->closeCursor();
             $_SESSION['isUpdatedOpeningDay'] = true;

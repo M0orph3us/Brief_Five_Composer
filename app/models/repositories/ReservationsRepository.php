@@ -7,16 +7,14 @@ use app\services\SQLRequest;
 use Exception;
 use PDOException;
 
-final class ReservationsRepository
+final class ReservationsRepository extends Database
 {
     // params
-    private $db;
 
     // contructor
     public function __construct()
     {
-        $this->db = new Database();
-        $this->db = $this->db->getDb();
+        parent::__construct();
     }
 
     // CRUD
@@ -38,7 +36,7 @@ final class ReservationsRepository
             'uuid_reservations' => $uuid_reservations
         ];
         try {
-            $stmt = $this->db->prepare($sql);
+            $stmt = $this->getDB()->prepare($sql);
             $stmt->execute($params);
             $stmt->closeCursor();
             $_SESSION['isAssigned'] = true;
@@ -62,7 +60,7 @@ final class ReservationsRepository
             'uuid_users' => $data['uuidUsers']
         ];
         try {
-            $stmt = $this->db->prepare($sql);
+            $stmt = $this->getDB()->prepare($sql);
             $stmt->execute($params);
             $stmt->closeCursor();
             $_SESSION['isReserved'] = true;

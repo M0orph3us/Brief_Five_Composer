@@ -7,16 +7,14 @@ use app\services\SQLRequest;
 use Exception;
 use PDOException;
 
-final class AvailableTablesRepository
+final class AvailableTablesRepository extends Database
 {
     // params
-    private $db;
 
     // contructor
     public function __construct()
     {
-        $this->db = new Database();
-        $this->db = $this->db->getDb();
+        parent::__construct();
     }
 
     // CRUD
@@ -33,7 +31,7 @@ final class AvailableTablesRepository
             'quantity_tables' => $number
         ];
         try {
-            $stmt = $this->db->prepare($sql);
+            $stmt = $this->getDB()->prepare($sql);
             $stmt->execute($params);
             $stmt->closeCursor();
             $_SESSION['isUpdatedQuantityTables'] = true;

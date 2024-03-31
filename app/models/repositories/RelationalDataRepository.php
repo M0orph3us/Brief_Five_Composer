@@ -8,16 +8,15 @@ use Exception;
 use PDO;
 use PDOException;
 
-final class RelationalDataRepository
+final class RelationalDataRepository extends Database
 {
     // params
-    private $db;
+
 
     // contructor
     public function __construct()
     {
-        $this->db = new Database();
-        $this->db = $this->db->getDb();
+        parent::__construct();
     }
 
     // CRUD
@@ -43,7 +42,7 @@ final class RelationalDataRepository
             'uuid_users' => $uuid_users
         ];
         try {
-            $stmt = $this->db->prepare($sql);
+            $stmt = $this->getDB()->prepare($sql);
             $stmt->execute($params);
             $result = $stmt->fetchAll(PDO::FETCH_CLASS, Reservations::class);
             $stmt->closeCursor();
@@ -80,7 +79,7 @@ final class RelationalDataRepository
             ORDER BY
                 r.reserved_on ASC";
         try {
-            $stmt = $this->db->prepare($sql);
+            $stmt = $this->getDB()->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $stmt->closeCursor();
@@ -116,7 +115,7 @@ final class RelationalDataRepository
             ORDER BY
                 r.reserved_on ASC";
         try {
-            $stmt = $this->db->prepare($sql);
+            $stmt = $this->getDB()->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $stmt->closeCursor();

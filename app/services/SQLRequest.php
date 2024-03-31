@@ -19,7 +19,7 @@ trait SQLRequest
         $Table = ucfirst($table);
         $sql = "SELECT $table.*, BIN_TO_UUID(uuid) AS uuid FROM $table";
         try {
-            $stmt = $this->db->prepare($sql);
+            $stmt = $this->getDb()->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_CLASS, "app\\models\\$Table");
             $stmt->closeCursor();
@@ -44,7 +44,7 @@ trait SQLRequest
             $where => $data
         ];
         try {
-            $stmt = $this->db->prepare($sql);
+            $stmt = $this->getDb()->prepare($sql);
             $stmt->execute($params);
             $result = $stmt->setFetchMode(PDO::FETCH_CLASS, "app\\models\\$Table");
             $result = $stmt->fetch();
@@ -67,7 +67,7 @@ trait SQLRequest
             'uuid' => $uuid
         ];
         try {
-            $stmt = $this->db->prepare($sql);
+            $stmt = $this->getDb()->prepare($sql);
             $stmt->execute($params);
             $stmt->closeCursor();
             $_SESSION[$table . 'isDeleted'] = true;
@@ -91,7 +91,7 @@ trait SQLRequest
             $where => $data
         ];
         try {
-            $stmt = $this->db->prepare($sql);
+            $stmt = $this->getDb()->prepare($sql);
             $stmt->execute($params);
             $result = $stmt->fetchColumn();
             $stmt->closeCursor();

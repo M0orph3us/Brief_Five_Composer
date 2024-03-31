@@ -6,7 +6,7 @@ use Exception;
 use PDO;
 use PDOException;
 
-final class Database
+class Database
 {
     // params
     private $db;
@@ -14,16 +14,15 @@ final class Database
     // constructor
     public function __construct()
     {
-        require __DIR__ . '/../../config/configDb.php';
-        $this->connexionDB($CONFIG);
+        $this->connexionDB();
     }
 
     // methods
-    private function connexionDB($CONFIG)
+    private function connexionDB()
     {
         try {
-            $dsn = "mysql:host=" . $CONFIG['DB_HOST'] . ";dbname=" . $CONFIG['DB_NAME'];
-            $this->db = new PDO($dsn, $CONFIG['DB_USER'], $CONFIG['DB_PASSWORD'], [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+            $dsn = "mysql:host=" . $_ENV['DB_HOST'] . ";dbname=" . $_ENV['DB_NAME'];
+            $this->db = new PDO($dsn, $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
         } catch (PDOException $error) {
             throw new Exception('Error: ' . $error->getMessage());
         }
@@ -35,9 +34,9 @@ final class Database
     }
 
 
-    public function initDB()
+    public function initDB($urlInitDB)
     {
-        $sql = file_get_contents('../SQL/initDB.sql');
+        $sql = file_get_contents($urlInitDB);
         try {
             $request = $this->db->prepare($sql);
             $request->execute();
@@ -46,9 +45,9 @@ final class Database
         }
     }
 
-    public function initData()
+    public function initData($urlInitData)
     {
-        $sql = file_get_contents('../SQL/initData.sql');
+        $sql = file_get_contents($urlInitData);
         try {
             $request = $this->db->prepare($sql);
             $request->execute();

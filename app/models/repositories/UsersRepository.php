@@ -8,16 +8,15 @@ use app\services\SQLRequest;
 use Exception;
 use PDOException;
 
-final class UsersRepository
+final class UsersRepository extends Database
 {
     // params
-    private $db;
+
 
     // contructor
     public function __construct()
     {
-        $this->db = new Database();
-        $this->db = $this->db->getDb();
+        parent::__construct();
     }
 
     // CRUD
@@ -39,7 +38,7 @@ final class UsersRepository
                 'password' => $data['passwordHash']
             ];
 
-            $stmt = $this->db->prepare($sql);
+            $stmt = $this->getDB()->prepare($sql);
             $stmt->execute($params);
             $stmt->closeCursor();
 
@@ -69,7 +68,7 @@ final class UsersRepository
 
         ];
         try {
-            $stmt = $this->db->prepare($sql);
+            $stmt = $this->getDB()->prepare($sql);
             $stmt->execute($params);
             $stmt->closeCursor();
             $_SESSION['isUpdated'] = true;
