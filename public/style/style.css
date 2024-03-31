@@ -72,9 +72,6 @@ body {
 /*//////////////////////////////////// BODY //////////////////////////////////////////////*/
 body {
   z-index: 1;
-  background-image: url("../../public/assets/imgs/bcg-img.jpg");
-  background-repeat: no-repeat;
-  background-position: center;
 }
 body p,
 body a,

@@ -1,4 +1,5 @@
 <?php
+
 function debug($var, $exit = true)
 {
     echo '<pre>';

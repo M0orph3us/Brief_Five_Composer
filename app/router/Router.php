@@ -6,10 +6,14 @@ use app\controllers\AdminController;
 use app\controllers\ReservationsController;
 use app\controllers\UserController;
 
+require __DIR__ . '/../config/configRouter.php';
+
 class Router
 {
+
     public static function route($uri)
     {
+
         $method = $_SERVER['REQUEST_METHOD'];
         switch ($uri) {
             case URL_HOMEPAGE:
