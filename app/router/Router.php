@@ -56,11 +56,12 @@ class Router
                 if ($method === 'GET') {
                     $user->profilPage();
                 }
-                if ($method === 'PUT') {
+                break;
+
+            case URL_UPDATEPROFIL:
+                $user = new UserController();
+                if ($method === 'POST') {
                     $user->updateProfil();
-                }
-                if ($method === 'DELETE') {
-                    $user->deleteProfil();
                 }
                 break;
 

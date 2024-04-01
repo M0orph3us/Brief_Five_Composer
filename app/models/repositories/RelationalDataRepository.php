@@ -37,7 +37,9 @@ final class RelationalDataRepository extends Database
             JOIN users U ON 
                 R.uuid_users = U.uuid
             WHERE 
-                U.uuid = :uuid_users";
+                U.uuid = UUID_TO_BIN(:uuid_users)
+            ORDER BY
+                r.reserved_on ASC";
         $params = [
             'uuid_users' => $uuid_users
         ];

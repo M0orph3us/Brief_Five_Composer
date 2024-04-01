@@ -1,5 +1,5 @@
 <?php
-// This trait is only functional with the same structure of the app and with uuids
+// This trait is only functional with the same structure of this app and with uuid
 
 namespace app\services;
 
@@ -19,9 +19,9 @@ trait SQLRequest
     {
 
         foreach ($columnsValue as $key => $value) {
-            $params[$key] = $value;
             $columns[] = $key;
             $values[] = ":$key";
+            $params[$key] = $value;
         }
         $columnsToUpdate = implode(", ", $columns);
         $valuesToCreate = implode(", ", $values);
@@ -62,7 +62,7 @@ trait SQLRequest
     /**
      * @param  string $table
      * @param  string $where
-     * @param  string $data
+     * @param  string $paramsData
      * @return object|false
      */
     public function findOne(string $table, string $where, string $paramsData): object | false
@@ -122,7 +122,7 @@ trait SQLRequest
     /**
      * @param  string $table
      * @param  string $uuid
-     * @return void
+     * @return boolean
      */
     public function delete(string $table, string $uuid): bool
     {

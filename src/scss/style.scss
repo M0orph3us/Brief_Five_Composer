@@ -85,22 +85,28 @@ body {
 body {
   z-index: 1;
   // font-family: "";
-  // background-image: url("../../public/assets/imgs/bcg-img.jpg");
-  // background-repeat: no-repeat;
-  // background-position: center;
-  // p,
-  // a,
-  // label,
-  // h1,
-  // h2,
-  // h3,
-  // h4,
-  // h5,
-  // h6,
-  // th,
-  // tr {
-  //   color: $text-color;
-  // }
+  background-image: url("../../public/assets/imgs/bcg-img.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  p,
+  a,
+  label,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  th,
+  tr {
+    color: $text-color;
+  }
+}
+
+.bcg-404 {
+  background-image: url("../../public/assets/imgs/404.svg");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 /*/////////////////////////////// RESPONSIVE MOBIL 360px ///////////////////////////////////////*/
@@ -122,9 +128,7 @@ header {
 
 main {
   flex: 1;
-  // .bcg-404 {
 
-  // }
   .opening-days-container,
   .register-container,
   .home-container,
@@ -133,7 +137,9 @@ main {
   .teams-container,
   .reservations-container,
   .assign-container,
-  .reservation-container {
+  .reservation-container,
+  .profil-container,
+  .my-profil-container {
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -150,17 +156,64 @@ main {
         padding: 5px;
         cursor: pointer;
       }
-      input,
       label,
       button {
-        margin-top: 20px;
+        margin-top: 10px;
       }
     }
   }
 
+  .profil-container {
+    .btn-profil-container {
+      margin: 20px 0;
+      button {
+        text-transform: uppercase;
+        font-weight: 700;
+        padding: 5px;
+        margin-left: 5px;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+    }
+    .my-reservation-container {
+      h2 {
+        text-align: center;
+        margin: 30px 0;
+      }
+      .cards-my-reservations-container {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        row-gap: 20px;
+        column-gap: 20px;
+        .cards-my-reservations {
+          padding: 10px;
+          border: 2px solid $text-color;
+          border-radius: 5px;
+          width: max-content;
+          height: max-content;
+          background-color: rgba(245, 245, 220, 0.158);
+        }
+      }
+    }
+
+    .my-profil-container {
+      h2 {
+        text-align: center;
+      }
+      .my-profil-card {
+        padding: 10px;
+        border: 2px solid $text-color;
+        border-radius: 5px;
+        width: max-content;
+        height: max-content;
+        background-color: rgba(245, 245, 220, 0.158);
+      }
+    }
+  }
   .admin-container {
     .btnAdmin-container {
       button {
+        margin-left: 5px;
         padding: 5px;
         text-transform: uppercase;
         cursor: pointer;
@@ -172,7 +225,9 @@ main {
       }
       .reservation-with-teams-container {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(1, 1fr);
+        row-gap: 20px;
+        column-gap: 20px;
         .cards-with-teams-container {
           padding: 10px;
           border: 2px solid $text-color;
@@ -184,7 +239,9 @@ main {
       }
       .reservation-without-teams-container {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(1, 1fr);
+        row-gap: 20px;
+        column-gap: 20px;
         .cards-without-teams-container {
           padding: 10px;
           border: 2px solid $text-color;

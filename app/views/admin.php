@@ -1,5 +1,9 @@
 <?php
 require_once __DIR__ . '/./includes/header.php';
+if (empty($_SESSION['adminIsConnected']) || $_SESSION['adminIsConnected'] !== true) {
+    header('Location:' . URL_HOMEPAGE);
+    exit;
+}
 ?>
 <main>
     <div class="admin-container">
@@ -16,7 +20,7 @@ require_once __DIR__ . '/./includes/header.php';
                     <th>Lastname</th>
                 </tr>
                 <?php
-                foreach ($viewData['allteams'] as $value) {
+                foreach ($allteams as $value) {
                     $firstnameTeam = $value->getFirstname();
                     $lastnameTeam = $value->getLastname();
                     echo "
@@ -30,7 +34,7 @@ require_once __DIR__ . '/./includes/header.php';
             <h2>Reservations With Staff Assigned</h2>
             <div class="reservation-with-teams-container">
                 <?php
-                foreach ($viewData['allReservationsWithTeams'] as $value) {
+                foreach ($allReservationsWithTeams as $value) {
                     $date = $value['formated_date'];
                     $firstnameReservationsWithTeams = $value['user_firstname'];
                     $lastnameReservationsWithTeams = $value['user_lastname'];
@@ -50,7 +54,7 @@ require_once __DIR__ . '/./includes/header.php';
             <h2>Reservations Without Staff Assigned</h2>
             <div class="reservation-without-teams-container">
                 <?php
-                foreach ($viewData['allReservationsWithoutTeams'] as $value) {
+                foreach ($allReservationsWithoutTeams as $value) {
                     $date = $value['formated_date'];
                     $firstnameReservationsWithoutTeams = $value['firstname'];
                     $lastnameReservationsWithoutTeams = $value['lastname'];
@@ -71,7 +75,7 @@ require_once __DIR__ . '/./includes/header.php';
                 <label for="select-teams">Select the staff : </label>
                 <select name="select-teams" id="select-teams">
                     <?php
-                    foreach ($viewData['allteams'] as $key => $value) {
+                    foreach ($allteams as $value) {
                         $firstnameTeam = $value->getFirstname();
                         $lastnameTeam = $value->getLastname();
                         $uuidTeams = $value->getUuid();
@@ -82,7 +86,7 @@ require_once __DIR__ . '/./includes/header.php';
                 <label for="select-reservations">Select Reservation</label>
                 <select name="select-reservations" id="select-reservations">
                     <?php
-                    foreach ($viewData['allReservationsWithoutTeams'] as $key => $value) {
+                    foreach ($allReservationsWithoutTeams as $value) {
                         $uuidReservation = $value['uuid'];
                         $lastnameUser = $value['lastname'];
                         $dateReservation = $value['formated_date'];
