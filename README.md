@@ -1,4 +1,4 @@
-# Create a responsive site
+# Create a MVC structure & SQL request with SGBD MySQL
 
 This project aims to master MVC architecture & SQL [Simplon Grenoble](https://simplon.co/).
 
@@ -10,6 +10,12 @@ This project aims to master MVC architecture & SQL [Simplon Grenoble](https://si
 git clone https://github.com/M0orph3us/Brief_Five_Composer
 
 ```
+
+### Composer
+
+This project run with dotenv and autoload package.
+
+Run the command "composer install" on CLI when the project is installed.
 
 ### Install SASS on your machine
 
@@ -33,11 +39,11 @@ For other configurations: [see Sass documentation](https://sass-lang.com/install
 
 ### Access the project
 
-With PHP server or Wamp or Mamp
+With PHP server, Wamp or Mamp
 
 ### Enable Sass compilation
 
-To see your style updated when changed, run the npm run watch command. Sass will automatically compile your code.
+To see your style updated when changed, run the "npm run watch" on your CLI. Sass will automatically compile your code.
 
 ## Authors
 
@@ -45,4 +51,4 @@ Github profil : https://github.com/M0orph3us
 
 ## Credits
 
-- Social media icons: https://fontawesome.com/
+- Bootstrap : https://getbootstrap.com/
