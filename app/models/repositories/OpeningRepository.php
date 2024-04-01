@@ -22,9 +22,9 @@ final class OpeningRepository extends Database
     /**
      * @param string $uuid
      * @param array<string, string> $data
-     * @return void
+     * @return bool
      */
-    public function update(array $data): void
+    public function update(array $data): bool
     {
         $sql = 'UPDATE opening SET  morning_opening_hour = :morning_opening_hour, morning_closing_hour = :morning_closing_hour, evening_opening_hour = :evening_opening_hour, evening_closing_hour = :evening_closing_hour WHERE opening_day = :opening_day';
         $params = [
@@ -38,9 +38,10 @@ final class OpeningRepository extends Database
             $stmt = $this->getDb()->prepare($sql);
             $stmt->execute($params);
             $stmt->closeCursor();
-            $_SESSION['isUpdatedOpeningDay'] = true;
+            return true;
         } catch (PDOException $error) {
             throw new Exception('Error: ' . $error->getMessage());
+            return false;
         }
     }
 }
