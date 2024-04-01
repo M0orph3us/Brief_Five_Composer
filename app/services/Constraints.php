@@ -23,11 +23,11 @@ trait Constraints
     {
         foreach ($inputValue as $key => $value) {
             if (empty($value)) {
-                $input = str_replace('Register', '', $key);
-                $error[$key] = "<p> Your $input can't be empty</p>";
+                $replace = ['Register', 'Update'];
+                $input = str_replace($replace, '', $key);
+                $error[$key] = "Your $input can't be empty";
             }
         }
-
         return !empty($error) ? $error : true;
     }
 }

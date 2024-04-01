@@ -1,5 +1,23 @@
 /*//////////////////////////////////// HEADER ////////////////////////////////////////////*/
 
 /*//////////////////////////////////// MAIN //////////////////////////////////////////////*/
+main {
+  .admin-container {
+    .reservations-container {
+      .reservation-without-teams-container,
+      .reservation-with-teams-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  }
+
+  .profil-container {
+    .my-reservation-container {
+      .cards-my-reservations-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  }
+}
 
 /*//////////////////////////////////// FOOTER ////////////////////////////////////////////*/

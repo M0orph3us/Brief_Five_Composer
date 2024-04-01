@@ -28,7 +28,7 @@ final class ReservationsRepository extends Database
      * @param  string $uuid_reservations
      * @return void
      */
-    public function assignReservation(string $uuid_teams, string $uuid_reservations): void
+    public function assignReservation(string $uuid_teams, string $uuid_reservations): bool
     {
         $sql = "INSERT INTO toassign (uuid_teams, uuid_reservations) VALUE (UUID_TO_BIN(:uuid_teams), UUID_TO_BIN(:uuid_reservations))";
         $params = [
@@ -39,9 +39,10 @@ final class ReservationsRepository extends Database
             $stmt = $this->getDB()->prepare($sql);
             $stmt->execute($params);
             $stmt->closeCursor();
-            $_SESSION['isAssigned'] = true;
+            return true;
         } catch (PDOException $error) {
             throw new Exception('Error: ' . $error->getMessage());
+            return false;
         }
     }
 
@@ -49,7 +50,7 @@ final class ReservationsRepository extends Database
      * @param  array<string, mixed> $data
      * @return void
      */
-    public function createReservation(array $data): void
+    public function createReservation(array $data): bool
     {
 
         $sql = "INSERT INTO reservations (number_of_persons, baby_chair, reserved_on, uuid_users) VALUE (:number_of_persons, :baby_chair, :reserved_on, UUID_TO_BIN(:uuid_users))";
@@ -63,9 +64,10 @@ final class ReservationsRepository extends Database
             $stmt = $this->getDB()->prepare($sql);
             $stmt->execute($params);
             $stmt->closeCursor();
-            $_SESSION['isReserved'] = true;
+            return true;
         } catch (PDOException $error) {
             throw new Exception('Error: ' . $error->getMessage());
+            return false;
         }
     }
 }

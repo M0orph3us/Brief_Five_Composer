@@ -5,7 +5,7 @@ namespace app\models;
 final class Teams
 {
     // params
-    private string $uuid, $firstname, $lastname, $uuidFormated;
+    private string $uuid, $firstname, $lastname;
 
     // constructor
     public function __construct(array $data = null)
@@ -88,26 +88,6 @@ final class Teams
     public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of uuidFormated
-     */ 
-    public function getUuidFormated()
-    {
-        return $this->uuidFormated;
-    }
-
-    /**
-     * Set the value of uuidFormated
-     *
-     * @return  self
-     */ 
-    public function setUuidFormated($uuidFormated)
-    {
-        $this->uuidFormated = $uuidFormated;
 
         return $this;
     }

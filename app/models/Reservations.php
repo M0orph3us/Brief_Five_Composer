@@ -7,9 +7,8 @@ use DateTime;
 final class Reservations
 {
     // params
-    private string $uuid, $uuid_users, $reserved_on, $uuidFormated;
+    private string $uuid, $baby_chair, $uuid_users, $reserved_on;
     private int $number_of_persons;
-    private bool $baby_chair;
 
     // constructor
     public function __construct(array $data = null)
@@ -77,11 +76,11 @@ final class Reservations
     }
 
     /**
-     * @param bool $baby_chair
+     * @param string $baby_chair
      *
      * @return  self
      */
-    public function setBaby_chair(bool $baby_chair): self
+    public function setBaby_chair(string $baby_chair): self
     {
         $this->baby_chair = $baby_chair;
 
@@ -89,9 +88,9 @@ final class Reservations
     }
 
     /**
-     * @return bool
+     * @return string
      */
-    public function getBaby_chair(): bool
+    public function getBaby_chair(): string
     {
         return $this->baby_chair;
     }
@@ -136,25 +135,5 @@ final class Reservations
     public function getUuid_users(): string
     {
         return $this->uuid_users;
-    }
-
-    /**
-     * Get the value of uuidFormated
-     */
-    public function getUuidFormated()
-    {
-        return $this->uuidFormated;
-    }
-
-    /**
-     * Set the value of uuidFormated
-     *
-     * @return  self
-     */
-    public function setUuidFormated($uuidFormated)
-    {
-        $this->uuidFormated = $uuidFormated;
-
-        return $this;
     }
 }

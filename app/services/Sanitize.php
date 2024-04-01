@@ -4,10 +4,10 @@ namespace app\services;
 
 trait Sanitize
 {
-    public function sanitize(array $fomrData): array
+    public function sanitize(array $formInput): array
     {
-        foreach ($fomrData as $key => $value) {
-            $dataSanitize[$key . 'Sanitize'] = htmlentities($value);
+        foreach ($formInput as $key => $value) {
+            $dataSanitize[$key] = htmlentities($value);
         }
         return $dataSanitize;
     }

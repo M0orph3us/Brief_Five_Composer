@@ -59,11 +59,7 @@ final class AdminController
         header('Location: ' . URL_ADMINPAGE);
     }
 
-    public function createNewTeam()
+    public function deleteTeams()
     {
-        $teamsRepo = new TeamsRepository();
-        $teamsRepo->create();
-
-        header('Location: ' . URL_ADMINPAGE);
     }
 }

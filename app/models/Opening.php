@@ -5,7 +5,7 @@ namespace app\models;
 final class Opening
 {
     // params
-    private string $uuid, $opening_day, $morning_opening_hour, $morning_closing_hour, $evening_opening_hour, $evening_closing_hour, $uuidFormated;
+    private string $uuid, $opening_day, $morning_opening_hour, $morning_closing_hour, $evening_opening_hour, $evening_closing_hour;
 
     // constructor
     public function __construct(array $data = null)
@@ -145,26 +145,6 @@ final class Opening
     public function setEvening_closing_hour(string $evening_closing_hour): self
     {
         $this->evening_closing_hour = $evening_closing_hour;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of uuidFormated
-     */
-    public function getUuidFormated()
-    {
-        return $this->uuidFormated;
-    }
-
-    /**
-     * Set the value of uuidFormated
-     *
-     * @return  self
-     */
-    public function setUuidFormated($uuidFormated)
-    {
-        $this->uuidFormated = $uuidFormated;
 
         return $this;
     }

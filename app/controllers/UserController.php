@@ -37,12 +37,81 @@ final class UserController
 
         $getReservationByUser = $getRelationalDataRepo->getReservationByUser($_SESSION['uuidUser']);
         $userProfil = $userRepo->findOne('users', 'uuid', $_SESSION['uuidUser']);
+        $csrfUpdate = $this->createCSRFToken('csrfUpdate');
 
         $viewData = [
+            'csrfUpdate' => $csrfUpdate,
             'userProfil' => $userProfil,
-            '$getReservationByUser' => $$getReservationByUser
+            'getReservationByUser' => $getReservationByUser
         ];
         $this->render('profil', $viewData);
+    }
+
+    public function updateProfil()
+    {
+        if ($this->verifyCSRFToken($_POST['csrfUpdate'], $_SESSION['csrfUpdate'])) {
+            if ($this->issetFormData($_POST)) {
+                if ($this->notEmpty($_POST) === true) {
+                    if ($this->minLengthConstraint($_POST['firstnameUpdate'], 3) && $this->maxLengthConstraint($_POST['firstnameUpdate'], 20)) {
+                        $formData['firstname'] = $_POST['firstnameUpdate'];
+                    } else {
+                        $error['firstnameLength'] = 'Your first name must be between 3 and 20 characters';
+                    };
+                    if ($this->minLengthConstraint($_POST['lastnameUpdate'], 2) && $this->maxLengthConstraint($_POST['lastnameUpdate'], 20)) {
+                        $formData['lastname'] = $_POST['lastnameUpdate'];
+                    } else {
+                        $error['lastnameLength'] = 'Your last name must be between 1 and 20 characters';
+                    };
+                    if (filter_var($_POST['mailUpdate'], FILTER_VALIDATE_EMAIL) !== false) {
+                        if ($this->minLengthConstraint($_POST['mailUpdate'], 5) && $this->maxLengthConstraint($_POST['mailUpdate'], 100)) {
+                            $formData['mail'] = $_POST['mailUpdate'];
+                        } else {
+                            $error['mailLength'] = 'Your mail must be between 5 and 20 characters';
+                        };
+                    } else {
+                        $error['mailFormat'] = 'Your email is not in the correct format';
+                    }
+                    if ($this->checkDoublePassword($_POST['passwordUpdate'], $_POST['confirmPasswordUpdate'])) {
+                        $password = $_POST['passwordUpdate'];
+                    } else {
+                        $error['password'] = 'Your confirmation password does not match the 1st';
+                    };
+                } else {
+                    $error = [];
+                    $error += $this->notEmpty($_POST);
+                    debug($error);
+                };
+                if (!empty($error)) {
+                    $csrfUpdate = $this->createCSRFToken('csrfUpdate');
+                    $viewData = [
+                        'csrfUpdate' => $csrfUpdate,
+                        'error' => $error
+                    ];
+                    $this->render('profil', $viewData);
+                } else {
+                    $formDataSanitize = $this->sanitize($formData);
+                    $passwordHash = $this->PasswordHash($password);
+
+                    $data =  [
+                        ...$formDataSanitize,
+                        'password' => $passwordHash,
+                        'uuid' => $_SESSION['uuidUser']
+                    ];
+
+                    $usersRepo = new UsersRepository();
+                    if ($usersRepo->update('users', $data, 'uuid')) {
+                        $_SESSION['isUpdated'] = true;
+                        header('Location:' . URL_PROFILPAGE);
+                    };
+                }
+            }
+        }
+    }
+
+    public function deleteProfil()
+    {
+        $userRepo = new UsersRepository();
+        $userRepo->delete('users', $_SESSION['uuidUser']);
     }
 
     public function registerPage()
@@ -69,6 +138,7 @@ final class UserController
     {
         unset($_SESSION['csrfLogin']);
         unset($_SESSION['csrfRegister']);
+        unset($_SESSION['csrfUpdate']);
 
         $this->render('home');
     }
@@ -89,22 +159,26 @@ final class UserController
     {
         if ($this->verifyCSRFToken($_POST['csrfRegister'], $_SESSION['csrfRegister'])) {
             if ($this->issetFormData($_POST)) {
-                if ($this->notEmpty($_POST)) {
+                if ($this->notEmpty($_POST) === true) {
                     if ($this->minLengthConstraint($_POST['firstnameRegister'], 3) && $this->maxLengthConstraint($_POST['firstnameRegister'], 20)) {
-                        $formData['firstnameRegister'] = $_POST['firstnameRegister'];
+                        $formData['firstname'] = $_POST['firstnameRegister'];
                     } else {
                         $error['firstnameLength'] = 'Your first name must be between 3 and 20 characters';
                     };
-                    if ($this->minLengthConstraint($_POST['lastnameRegister'], 1) && $this->maxLengthConstraint($_POST['lastnameRegister'], 20)) {
-                        $formData['lastnameRegister'] = $_POST['lastnameRegister'];
+                    if ($this->minLengthConstraint($_POST['lastnameRegister'], 2) && $this->maxLengthConstraint($_POST['lastnameRegister'], 20)) {
+                        $formData['lastname'] = $_POST['lastnameRegister'];
                     } else {
                         $error['lastnameLength'] = 'Your last name must be between 1 and 20 characters';
                     };
-                    if ($this->minLengthConstraint($_POST['mailRegister'], 5) && $this->maxLengthConstraint($_POST['mailRegister'], 100)) {
-                        $formData['mailRegister'] = $_POST['mailRegister'];
+                    if (filter_var($_POST['mailRegister'], FILTER_VALIDATE_EMAIL) !== false) {
+                        if ($this->minLengthConstraint($_POST['mailRegister'], 5) && $this->maxLengthConstraint($_POST['mailRegister'], 100)) {
+                            $formData['mail'] = $_POST['mailRegister'];
+                        } else {
+                            $error['mailLength'] = 'Your mail must be between 5 and 20 characters';
+                        };
                     } else {
-                        $error['mailLength'] = 'Your mail must be between 5 and 20 characters';
-                    };
+                        $error['mailFormat'] = 'Your email is not in the correct format';
+                    }
                     if ($this->checkDoublePassword($_POST['firstPasswordRegister'], $_POST['secondPasswordRegister'])) {
                         $password = $_POST['firstPasswordRegister'];
                     } else {
@@ -125,16 +199,18 @@ final class UserController
                 } else {
                     $formDataSanitize = $this->sanitize($formData);
                     $passwordHash = $this->PasswordHash($password);
+                    debug($formDataSanitize);
 
                     $data =  [
                         ...$formDataSanitize,
-                        'passwordHash' => $passwordHash
+                        'password' => $passwordHash
                     ];
 
                     $usersRepo = new UsersRepository();
-                    $usersRepo->create($data);
-
-                    header('Location:' . URL_HOMEPAGE);
+                    if ($usersRepo->create('users', $data)) {
+                        $_SESSION['isRegisted'] = true;
+                        header('Location:' . URL_HOMEPAGE);
+                    };
                 }
             }
         }
@@ -163,55 +239,48 @@ final class UserController
                     $mailSanitize = htmlentities($mail);
                     $userRepo = new UsersRepository();
                     $getUser = $userRepo->findOne('users', 'mail', $mailSanitize);
-                    $getPasswordUser = $getUser->getPassword();
-                    if (password_verify($password, $getPasswordUser)) {
-
-                        $getRole = $getUser->getRole();
-                        if ($getRole === 'user') {
-                            unset($_SESSION['adminIsConnected']);
-                            unset($_SESSION['superAdminIsConnected']);
-                            $_SESSION['userIsConnected'] = true;
-                            $_SESSION['uuidUser'] = $getUser->getUuid();
-                        }
-                        if ($getRole === 'admin') {
-                            unset($_SESSION['superAdminIsConnected']);
-                            unset($_SESSION['userIsConnected']);
-                            $_SESSION['adminIsConnected'] = true;
-                        }
-                        if ($getRole === 'super_admin') {
-                            unset($_SESSION['adminIsConnected']);
-                            unset($_SESSION['userIsConnected']);
-                            $_SESSION['superAdminIsConnected'] = true;
-                        }
-
-                        header('Location: ' . URL_HOMEPAGE);
-                    } else {
-                        $error = 'This password does not match';
-                        $csrfLogin = $this->createCSRFToken('csrfLogin');
+                    if ($getUser === false) {
                         $viewData = [
-                            'wrongPassword' => $error,
-                            'csrfLogin' => $csrfLogin
+                            'mailError' => 'this email does not exist'
                         ];
                         $this->render('login', $viewData);
+                    } else {
+                        $getPasswordUser = $getUser->getPassword();
+                        if (password_verify($password, $getPasswordUser)) {
+
+                            $getRole = $getUser->getRole();
+                            if ($getRole === 'user') {
+                                unset($_SESSION['adminIsConnected']);
+                                unset($_SESSION['superAdminIsConnected']);
+                                $_SESSION['userIsConnected'] = true;
+                                $_SESSION['uuidUser'] = $getUser->getUuid();
+                            }
+                            if ($getRole === 'admin') {
+                                unset($_SESSION['superAdminIsConnected']);
+                                unset($_SESSION['userIsConnected']);
+                                $_SESSION['adminIsConnected'] = true;
+                            }
+                            if ($getRole === 'super_admin') {
+                                unset($_SESSION['adminIsConnected']);
+                                unset($_SESSION['userIsConnected']);
+                                $_SESSION['superAdminIsConnected'] = true;
+                            }
+
+                            header('Location: ' . URL_HOMEPAGE);
+                        } else {
+                            $error = 'This password does not match';
+                            $csrfLogin = $this->createCSRFToken('csrfLogin');
+                            $viewData = [
+                                'wrongPassword' => $error,
+                                'csrfLogin' => $csrfLogin
+                            ];
+                            $this->render('login', $viewData);
+                        }
                     }
                 }
             }
         }
     }
-
-    public function updateProfil()
-    {
-        $userRepo = new UsersRepository();
-        $userRepo->update($_SESSION['uuidUser'], $data);
-    }
-
-    public function deleteProfil()
-    {
-        $userRepo = new UsersRepository();
-        $userRepo->delete('users', $_SESSION['uuidUser']);
-    }
-
-
 
 
     public function logout()

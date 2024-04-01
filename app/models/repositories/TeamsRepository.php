@@ -22,30 +22,30 @@ final class TeamsRepository extends Database
     // CRUD
     use SQLRequest;
 
-    /**
-     * @param array<string, string> $data
-     * @return void
-     */
-    public function create(array $data): void
-    {
-        $sql = "INSERT INTO teams (firstname, lastname, mail, password) VALUE(:firstname, :lastname, :mail, :password)";
-        try {
+    // /**
+    //  * @param array<string, string> $data
+    //  * @return void
+    //  */
+    // public function create(array $data): void
+    // {
+    //     $sql = "INSERT INTO teams (firstname, lastname, mail, password) VALUE(:firstname, :lastname, :mail, :password)";
+    //     try {
 
-            $params = [
-                'firstname' => $data['firstname'],
-                'lastname' => $data['lastname'],
-                'mail' => $data['mail'],
-                'password' => $data['password']
-            ];
+    //         $params = [
+    //             'firstname' => $data['firstname'],
+    //             'lastname' => $data['lastname'],
+    //             'mail' => $data['mail'],
+    //             'password' => $data['password']
+    //         ];
 
-            $stmt = $this->getDB()->prepare($sql);
-            $stmt->execute($params);
-            $stmt->closeCursor();
-            $_SESSION['isCreatedTeam'] = true;
-        } catch (PDOException $error) {
-            throw new Exception('Error: ' . $error->getMessage());
-        }
-    }
+    //         $stmt = $this->getDB()->prepare($sql);
+    //         $stmt->execute($params);
+    //         $stmt->closeCursor();
+    //         $_SESSION['isCreatedTeam'] = true;
+    //     } catch (PDOException $error) {
+    //         throw new Exception('Error: ' . $error->getMessage());
+    //     }
+    // }
 
     /**
      * @param  string $uuid

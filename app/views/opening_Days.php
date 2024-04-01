@@ -5,19 +5,17 @@ require_once __DIR__ . '/./includes/header.php';
     <div class="opening-days-container">
         <h1>Opening Days</h1>
         <div class="opening-days">
-            <?php if (!empty($viewData)) {
-                foreach ($viewData as $getAllOpeningModel) {
-                    for ($k = 0; $k < count($getAllOpeningModel); $k++) {
-                        $day = $getAllOpeningModel[$k]->getOpening_day();
-                        $morningOpening = $getAllOpeningModel[$k]->getMorning_opening_hour();
-                        $morningClosing = $getAllOpeningModel[$k]->getMorning_closing_hour();
-                        $eveningOpening = $getAllOpeningModel[$k]->getEvening_opening_hour();
-                        $eveningClosing = $getAllOpeningModel[$k]->getEvening_closing_hour();
+            <?php if (!empty($getOpeningDay)) {
+                foreach ($getOpeningDay as $key => $value) {
+                    $day = $getOpeningDay[$key]->getOpening_day();
+                    $morningOpening = $getOpeningDay[$key]->getMorning_opening_hour();
+                    $morningClosing = $getOpeningDay[$key]->getMorning_closing_hour();
+                    $eveningOpening = $getOpeningDay[$key]->getEvening_opening_hour();
+                    $eveningClosing = $getOpeningDay[$key]->getEvening_closing_hour();
 
-                        echo "<h3> $day </h3>";
-                        echo "<p> Morning : $morningOpening - $morningClosing <p> ";
-                        echo "<p> Evening : $eveningOpening - $eveningClosing <p> ";
-                    }
+                    echo "<h3> $day </h3>";
+                    echo "<p> Morning : $morningOpening - $morningClosing <p> ";
+                    echo "<p> Evening : $eveningOpening - $eveningClosing <p> ";
                 }
             } ?>
         </div>
