@@ -116,12 +116,7 @@ main .register-container,
 main .home-container,
 main .login-container,
 main .admin-container,
-main .teams-container,
-main .reservations-container,
-main .assign-container,
-main .reservation-container,
-main .profil-container,
-main .my-profil-container {
+main .profil-container {
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -134,12 +129,7 @@ main .register-container form,
 main .home-container form,
 main .login-container form,
 main .admin-container form,
-main .teams-container form,
-main .reservations-container form,
-main .assign-container form,
-main .reservation-container form,
-main .profil-container form,
-main .my-profil-container form {
+main .profil-container form {
   display: flex;
   flex-direction: column;
 }
@@ -153,18 +143,8 @@ main .login-container form label,
 main .login-container form button,
 main .admin-container form label,
 main .admin-container form button,
-main .teams-container form label,
-main .teams-container form button,
-main .reservations-container form label,
-main .reservations-container form button,
-main .assign-container form label,
-main .assign-container form button,
-main .reservation-container form label,
-main .reservation-container form button,
 main .profil-container form label,
-main .profil-container form button,
-main .my-profil-container form label,
-main .my-profil-container form button {
+main .profil-container form button {
   text-transform: uppercase;
   font-weight: 700;
   padding: 5px;
@@ -180,18 +160,8 @@ main .login-container form label,
 main .login-container form button,
 main .admin-container form label,
 main .admin-container form button,
-main .teams-container form label,
-main .teams-container form button,
-main .reservations-container form label,
-main .reservations-container form button,
-main .assign-container form label,
-main .assign-container form button,
-main .reservation-container form label,
-main .reservation-container form button,
 main .profil-container form label,
-main .profil-container form button,
-main .my-profil-container form label,
-main .my-profil-container form button {
+main .profil-container form button {
   margin-top: 10px;
 }
 main .profil-container .btn-profil-container {
@@ -204,6 +174,17 @@ main .profil-container .btn-profil-container button {
   margin-left: 5px;
   text-transform: uppercase;
   cursor: pointer;
+}
+main .profil-container .my-reservation-container,
+main .profil-container .my-profil-container {
+  padding: 20px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  column-gap: 20px;
+}
+main .profil-container .my-reservation-container {
+  display: flex;
 }
 main .profil-container .my-reservation-container h2 {
   text-align: center;
@@ -223,6 +204,9 @@ main .profil-container .my-reservation-container .cards-my-reservations-containe
   height: max-content;
   background-color: rgba(245, 245, 220, 0.158);
 }
+main .profil-container .my-profil-container {
+  display: none;
+}
 main .profil-container .my-profil-container h2 {
   text-align: center;
 }
@@ -240,8 +224,25 @@ main .admin-container .btnAdmin-container button {
   text-transform: uppercase;
   cursor: pointer;
 }
-main .admin-container .reservations-container h2 {
+main .admin-container .reservations-container,
+main .admin-container .teams-container,
+main .admin-container .assign-container {
+  padding: 20px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  column-gap: 20px;
+}
+main .admin-container .reservations-container h2,
+main .admin-container .teams-container h2,
+main .admin-container .assign-container h2 {
   margin: 20px 0;
+}
+main .admin-container .assign-container {
+  display: none;
+}
+main .admin-container .reservations-container {
+  display: none;
 }
 main .admin-container .reservations-container .reservation-with-teams-container {
   display: grid;

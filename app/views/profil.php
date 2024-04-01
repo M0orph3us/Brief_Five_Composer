@@ -4,7 +4,6 @@ if (empty($_SESSION['userIsConnected']) || $_SESSION['userIsConnected'] !== true
     header('Location:' . URL_HOMEPAGE);
     exit;
 }
-// debug($_SESSION);
 ?>
 <main>
     <div class="profil-container">

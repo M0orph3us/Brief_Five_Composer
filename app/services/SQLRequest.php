@@ -92,22 +92,17 @@ trait SQLRequest
     /**
      * @param  string  $table
      * @param  array   $setColumnsData
-     * @param  string  $where
      * @return boolean
      */
-    public function update(string $table, array $setColumnsData, string $where): bool
+    public function update(string $table, array $setColumnsData, string $uuid): bool
     {
         foreach ($setColumnsData as $key => $value) {
             $params[$key] = $value;
+            $params['uuid'] = $uuid;
             $columns[] = "$key = :$key";
-            if ($where === 'uuid') {
-                $data = "UUID_TO_BIN(:$where)";
-            } else {
-                $data = ":$where";
-            }
         }
         $setColumns = implode(", ", $columns);
-        $sql = "UPDATE $table SET $setColumns  WHERE $where = $data";
+        $sql = "UPDATE $table SET $setColumns  WHERE uuid = UUID_TO_BIN(:uuid)";
         try {
             $stmt = $this->getDb()->prepare($sql);
             $stmt->execute($params);

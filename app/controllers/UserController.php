@@ -94,12 +94,11 @@ final class UserController
 
                     $data =  [
                         ...$formDataSanitize,
-                        'password' => $passwordHash,
-                        'uuid' => $_SESSION['uuidUser']
+                        'password' => $passwordHash
                     ];
 
                     $usersRepo = new UsersRepository();
-                    if ($usersRepo->update('users', $data, 'uuid')) {
+                    if ($usersRepo->update('users', $data, $_SESSION['uuidUser'])) {
                         $_SESSION['isUpdated'] = true;
                         header('Location:' . URL_PROFILPAGE);
                     };

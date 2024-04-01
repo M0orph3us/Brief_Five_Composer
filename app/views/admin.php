@@ -29,6 +29,7 @@ if (empty($_SESSION['adminIsConnected']) || $_SESSION['adminIsConnected'] !== tr
                         <td>$lastnameTeam</td>
                     </tr>";
                 } ?>
+            </table>
         </div>
         <div class="reservations-container" id="reservations-container">
             <h2>Reservations With Staff Assigned</h2>
